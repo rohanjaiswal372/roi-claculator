@@ -6,8 +6,7 @@ import { CiCalculator2 } from 'react-icons/ci';
 
 function navbar() {
   const links = [
-    { label: 'Dashboad', href: '/' },
-    { label: 'Menu', href: '/menu' },
+    { label: 'We make navigating your weight loss journey easy', href: '/' }
   ]
   return (
     <nav className='flex border-b'>
