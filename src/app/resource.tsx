@@ -30,7 +30,7 @@ export const data = [
       {
         name: 'Additional Monthly New Patient Visits',
         id: 'AdMNPVs',
-        arguments: ['AvMBSs', 'AvMNPVs'],
+        arguments: ['AvMNPVs', 'AvMNPVs'],
         formula: (AvMNPVs : number, NewPatientVisits : number) => {
           return  AvMNPVs * NewPatientVisits
         }
