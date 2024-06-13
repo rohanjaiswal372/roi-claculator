@@ -3,11 +3,6 @@ export const data = [
     title : 'Pull Through Rate',
     input: [
       {
-        name: 'Average Monthly New Patient Visits',
-        id: 'AvMNPVs',
-        type: 'number',
-      },
-      {
         name: 'Average Monthly Bariatric Surgeries',
         id: 'AvMBSs',
         type: 'number',
@@ -27,6 +22,23 @@ export const data = [
           return  AvMBSs/AvMNPVs
         }
       },
+    ]
+  },
+  {
+    title : 'Additional Monthly New Patient Visits',
+    input: [
+      {
+        name: 'Average Monthly New Patient Visits',
+        id: 'AvMNPVs',
+        type: 'number',
+      },
+      {
+        name: 'Percentage or Number Increase in New Patient Visits',
+        id: 'PNINPV',
+        type: 'number',
+      },
+    ],
+    estimate: [
       {
         name: 'Additional Monthly New Patient Visits',
         id: 'AdMNPVs',
@@ -38,46 +50,11 @@ export const data = [
     ]
   },
   {
-    title : 'Average Monthly New Patient',
+    title : 'Commercial Reimbursement',
     input: [
       {
         name: 'Percentage of Medicare Reimbursement for Commercial Evaluation and Management Codes',
         id: 'CPctMCREM',
-        type: 'number',
-      },
-      {
-        name: 'Percentage of Medicare Reimbursement for Exchange Evaluation and Management Codes',
-        id: 'EPctMcrEM',
-        type: 'number',
-      },
-      {
-        name: 'Percentage of Medicare Reimbursement for Medicaid Evaluation and Management Codes',
-        id: 'McdPctMcrEM',
-        type: 'number',
-      },
-      // {
-      //   name: 'Percentage of Medicare Reimbursement for Medicare Evaluation and Management Codes',
-      //   id: 'McrPctMcrEM',
-      //   type: 'number',
-      // },
-      // {
-      //   name: 'Percentage of New Patient Visits Commercial',
-      //   id: 'PctNPVsC',
-      //   type: 'number',
-      // },
-      // {
-      //   name: 'Percentage of New Patient Visits Exchange',
-      //   id: 'PctNPVsE',
-      //   type: 'number',
-      // },
-      // {
-      //   name: 'Percentage of New Patient Visits Medicaid',
-      //   id: 'PctNPVsMcd',
-      //   type: 'number',
-      // },
-      {
-        name: 'Percentage of New Patient Visits Medicare',
-        id: 'PctNPVsMcr',
         type: 'number',
       },
       {
@@ -93,14 +70,6 @@ export const data = [
         arguments: ['CPctMCREM', 'CPT99205'],
         formula: (CPctMCREM : number, CPT99205 : number) => {
           return  CPctMCREM * CPT99205
-        }
-      },
-      {
-        name: 'Exchange Reimbursemen',
-        id: 'EREM',
-        arguments: ['EPctMcrEM', 'CPT99205'],
-        formula: (EPctMcrEM : number, CPT99205 : number) => {
-          return  EPctMcrEM * CPT99205
         }
       },
     ]

@@ -77,7 +77,7 @@ function estimate({ close, resourceData }: ToggleProps) {
 
 
             <div className="flex items-center justify-center form-control mt-6">
-              <button className="rounded-full py-3 px-8 bg-[#dc5a57] hover:bg-[#a8302e] text-white ">Pull Through Rate (PTR)</button>
+              <button className="rounded-full py-3 px-8 bg-[#dc5a57] hover:bg-[#a8302e] text-white ">Calculate</button>
             </div>
           </form>
         </div>
