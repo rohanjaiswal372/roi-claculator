@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface ToggleProps {
   close: () => void,
@@ -8,14 +8,15 @@ interface ToggleProps {
     input: [
       {
         name: string,
-        abbreviation: string,
+        id: string,
         type: string,
       }
     ],
     estimate: [
       {
         name: string,
-        abbreviation: string,
+        id: string,
+        arguments: []
         formula: () => string,
       }
     ]
@@ -23,6 +24,17 @@ interface ToggleProps {
 }
 
 function estimate({ close, resourceData }: ToggleProps) {
+
+  function handleSubmit(event: any) {
+    event.preventDefault()
+
+    const resp = resourceData.estimate.map((resource: any) => {
+      const args = resource.arguments.map((id: any) => event.currentTarget.elements[id].value);
+      const element = document.getElementById(resource.id) as HTMLInputElement;
+      element.value = resource.formula(...args)
+    })
+  }
+
 
   return (
     <div className="col-span-2 overflow-hidden">
@@ -34,30 +46,31 @@ function estimate({ close, resourceData }: ToggleProps) {
       <div className='p-14 border-l-2 border-[#979797]'>
 
         <div className="card shadow-2xl bg-white text-black">
-          <form className="card-body">
+          <form className="card-body" onSubmit={handleSubmit}>
             <div className="grid grid-flow-col auto-cols-fr gap-10 w-full">
               <div className="form-control gap-4">
-                {resourceData.input.map((el) => 
+                {resourceData.input.map((el, idx) =>
                 (
-                  <div className='w-full'>
-                  <label className="label">
-                    <span className="label-text text-black">{el.name}</span>
-                  </label>
-                  <input type="text" placeholder={el.abbreviation} className="bg-[#e5e6e6] input input-bordered w-full" required />
-                </div>
-                )                
+                  <div className='w-full' key={idx}>
+                    <label className="label">
+                      <span className="label-text text-black">{el.name}</span>
+                    </label>
+                    <input type="text" name={el.id} placeholder={el.id} className="bg-[#e5e6e6] input input-bordered w-full" required />
+                  </div>
+                )
                 )}
               </div>
-              <div className="form-control gap-4">
-                {resourceData.estimate.map((el) => 
+              <div className="form-control gap-4 border-l-2 border-[#979797] p-4">
+                <h3 className='text-center'>Estimates</h3>
+                {resourceData.estimate.map((el, idx) =>
                 (
-                  <div className='w-full'>
-                  <label className="label">
-                    <span className="label-text text-black">{el.name}</span>
-                  </label>
-                  <input type="text" placeholder={el.abbreviation} className="bg-[#e5e6e6] input input-bordered w-full" required />
-                </div>
-                )                
+                  <div className='w-full' key={idx}>
+                    <label className="label">
+                      <span className="label-text text-black">{el.name}</span>
+                    </label>
+                    <input type="text" id={el.id} disabled placeholder={el.id} className="disabled:text-red-400 font-bold text-lg bg-[#e5e6e6] disabled:bg-[#e5e6e6] input input-bordered w-full" />
+                  </div>
+                )
                 )}
               </div>
             </div>

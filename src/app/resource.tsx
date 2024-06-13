@@ -4,31 +4,33 @@ export const data = [
     input: [
       {
         name: 'Average Monthly New Patient Visits',
-        abbreviation: 'AvMNPVs',
+        id: 'AvMNPVs',
         type: 'number',
       },
       {
         name: 'Average Monthly Bariatric Surgeries',
-        abbreviation: 'AvMBSs',
+        id: 'AvMBSs',
         type: 'number',
       },
       {
         name: 'Percentage or Number Increase in New Patient Visits',
-        abbreviation: null,
+        id: 'PNINPV',
         type: 'number',
       },
     ],
     estimate: [
       {
         name: 'Pull Through Rate',
-        abbreviation: 'PTR',
+        id: 'PTR',
+        arguments: ['AvMBSs', 'AvMNPVs'],
         formula: (AvMBSs : number, AvMNPVs : number) => {
           return  AvMBSs/AvMNPVs
         }
       },
       {
         name: 'Additional Monthly New Patient Visits',
-        abbreviation: 'AdMNPVs',
+        id: 'AdMNPVs',
+        arguments: ['AvMBSs', 'AvMNPVs'],
         formula: (AvMNPVs : number, NewPatientVisits : number) => {
           return  AvMNPVs * NewPatientVisits
         }
@@ -39,34 +41,66 @@ export const data = [
     title : 'Average Monthly New Patient',
     input: [
       {
-        name: 'Average Monthly New Patient Visits',
-        abbreviation: 'AvMNPVs',
+        name: 'Percentage of Medicare Reimbursement for Commercial Evaluation and Management Codes',
+        id: 'CPctMCREM',
         type: 'number',
       },
       {
-        name: 'Average Monthly Bariatric Surgeries',
-        abbreviation: 'AvMBSs',
+        name: 'Percentage of Medicare Reimbursement for Exchange Evaluation and Management Codes',
+        id: 'EPctMcrEM',
         type: 'number',
       },
       {
-        name: 'Percentage or Number Increase in New Patient Visits',
-        abbreviation: null,
+        name: 'Percentage of Medicare Reimbursement for Medicaid Evaluation and Management Codes',
+        id: 'McdPctMcrEM',
+        type: 'number',
+      },
+      // {
+      //   name: 'Percentage of Medicare Reimbursement for Medicare Evaluation and Management Codes',
+      //   id: 'McrPctMcrEM',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Commercial',
+      //   id: 'PctNPVsC',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Exchange',
+      //   id: 'PctNPVsE',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Medicaid',
+      //   id: 'PctNPVsMcd',
+      //   type: 'number',
+      // },
+      {
+        name: 'Percentage of New Patient Visits Medicare',
+        id: 'PctNPVsMcr',
+        type: 'number',
+      },
+      {
+        name: 'Medicare Reimbursement for New Patient Visit',
+        id: 'CPT99205',
         type: 'number',
       },
     ],
     estimate: [
       {
-        name: 'Pull Through Rate',
-        abbreviation: 'PTR',
-        formula: (AvMBSs : number, AvMNPVs : number) => {
-          return  AvMBSs/AvMNPVs
+        name: 'Commercial Reimbursement',
+        id: 'CREM',
+        arguments: ['CPctMCREM', 'CPT99205'],
+        formula: (CPctMCREM : number, CPT99205 : number) => {
+          return  CPctMCREM * CPT99205
         }
       },
       {
-        name: 'Additional Monthly New Patient Visits',
-        abbreviation: 'AdMNPVs',
-        formula: (AvMNPVs : number, NewPatientVisits : number) => {
-          return  AvMNPVs * NewPatientVisits
+        name: 'Exchange Reimbursemen',
+        id: 'EREM',
+        arguments: ['EPctMcrEM', 'CPT99205'],
+        formula: (EPctMcrEM : number, CPT99205 : number) => {
+          return  EPctMcrEM * CPT99205
         }
       },
     ]
@@ -76,31 +110,33 @@ export const data = [
     input: [
       {
         name: 'Average Monthly New Patient Visits',
-        abbreviation: 'AvMNPVs',
+        id: 'AvMNPVs',
         type: 'number',
       },
       {
         name: 'Average Monthly Bariatric Surgeries',
-        abbreviation: 'AvMBSs',
+        id: 'AvMBSs',
         type: 'number',
       },
       {
         name: 'Percentage or Number Increase in New Patient Visits',
-        abbreviation: null,
+        id: 'PNINPV',
         type: 'number',
       },
     ],
     estimate: [
       {
         name: 'Pull Through Rate',
-        abbreviation: 'PTR',
+        id: 'PTR',
+        arguments: ['AvMBSs', 'AvMNPVs'],
         formula: (AvMBSs : number, AvMNPVs : number) => {
           return  AvMBSs/AvMNPVs
         }
       },
       {
         name: 'Additional Monthly New Patient Visits',
-        abbreviation: 'AdMNPVs',
+        id: 'AdMNPVs',
+        arguments: ['AvMBSs', 'AvMNPVs'],
         formula: (AvMNPVs : number, NewPatientVisits : number) => {
           return  AvMNPVs * NewPatientVisits
         }
@@ -108,35 +144,105 @@ export const data = [
     ]
   },
   {
-    title : 'AvMNPVs',
+    title : 'Percentage of Medicare Reimbursement',
+    input: [
+      {
+        name: 'Percentage of Medicare Reimbursement for Commercial Evaluation and Management Codes',
+        id: 'CPctMCREM',
+        type: 'number',
+      },
+      {
+        name: 'Percentage of Medicare Reimbursement for Exchange Evaluation and Management Codes',
+        id: 'EPctMcrEM',
+        type: 'number',
+      },
+      {
+        name: 'Percentage of Medicare Reimbursement for Medicaid Evaluation and Management Codes',
+        id: 'McdPctMcrEM',
+        type: 'number',
+      },
+      // {
+      //   name: 'Percentage of Medicare Reimbursement for Medicare Evaluation and Management Codes',
+      //   id: 'McrPctMcrEM',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Commercial',
+      //   id: 'PctNPVsC',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Exchange',
+      //   id: 'PctNPVsE',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Medicaid',
+      //   id: 'PctNPVsMcd',
+      //   type: 'number',
+      // },
+      {
+        name: 'Percentage of New Patient Visits Medicare',
+        id: 'PctNPVsMcr',
+        type: 'number',
+      },
+      {
+        name: 'Medicare Reimbursement for New Patient Visit',
+        id: 'CPT99205',
+        type: 'number',
+      },
+    ],
+    estimate: [
+      {
+        name: 'Commercial Reimbursement',
+        id: 'CREM',
+        arguments: ['CPctMCREM', 'CPT99205'],
+        formula: (CPctMCREM : number, CPT99205 : number) => {
+          return  CPctMCREM * CPT99205
+        }
+      },
+      {
+        name: 'Exchange Reimbursemen',
+        id: 'EREM',
+        arguments: ['EPctMcrEM', 'CPT99205'],
+        formula: (EPctMcrEM : number, CPT99205 : number) => {
+          return  EPctMcrEM * CPT99205
+        }
+      },
+    ]
+  },
+  {
+    title : 'Additional Monthly New Patient Visits',
     input: [
       {
         name: 'Average Monthly New Patient Visits',
-        abbreviation: 'AvMNPVs',
+        id: 'AvMNPVs',
         type: 'number',
       },
       {
         name: 'Average Monthly Bariatric Surgeries',
-        abbreviation: 'AvMBSs',
+        id: 'AvMBSs',
         type: 'number',
       },
       {
         name: 'Percentage or Number Increase in New Patient Visits',
-        abbreviation: null,
+        id: 'PNINPV',
         type: 'number',
       },
     ],
     estimate: [
       {
         name: 'Pull Through Rate',
-        abbreviation: 'PTR',
+        id: 'PTR',
+        arguments: ['AvMBSs', 'AvMNPVs'],
         formula: (AvMBSs : number, AvMNPVs : number) => {
           return  AvMBSs/AvMNPVs
         }
       },
       {
         name: 'Additional Monthly New Patient Visits',
-        abbreviation: 'AdMNPVs',
+        id: 'AdMNPVs',
+        arguments: ['AvMBSs', 'AvMNPVs'],
         formula: (AvMNPVs : number, NewPatientVisits : number) => {
           return  AvMNPVs * NewPatientVisits
         }
@@ -144,35 +250,105 @@ export const data = [
     ]
   },
   {
-    title : 'Estimate AvMBSs',
+    title : 'Medicare Reimbursement for New Patient Visit',
+    input: [
+      {
+        name: 'Percentage of Medicare Reimbursement for Commercial Evaluation and Management Codes',
+        id: 'CPctMCREM',
+        type: 'number',
+      },
+      {
+        name: 'Percentage of Medicare Reimbursement for Exchange Evaluation and Management Codes',
+        id: 'EPctMcrEM',
+        type: 'number',
+      },
+      {
+        name: 'Percentage of Medicare Reimbursement for Medicaid Evaluation and Management Codes',
+        id: 'McdPctMcrEM',
+        type: 'number',
+      },
+      // {
+      //   name: 'Percentage of Medicare Reimbursement for Medicare Evaluation and Management Codes',
+      //   id: 'McrPctMcrEM',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Commercial',
+      //   id: 'PctNPVsC',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Exchange',
+      //   id: 'PctNPVsE',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Medicaid',
+      //   id: 'PctNPVsMcd',
+      //   type: 'number',
+      // },
+      {
+        name: 'Percentage of New Patient Visits Medicare',
+        id: 'PctNPVsMcr',
+        type: 'number',
+      },
+      {
+        name: 'Medicare Reimbursement for New Patient Visit',
+        id: 'CPT99205',
+        type: 'number',
+      },
+    ],
+    estimate: [
+      {
+        name: 'Commercial Reimbursement',
+        id: 'CREM',
+        arguments: ['CPctMCREM', 'CPT99205'],
+        formula: (CPctMCREM : number, CPT99205 : number) => {
+          return  CPctMCREM * CPT99205
+        }
+      },
+      {
+        name: 'Exchange Reimbursemen',
+        id: 'EREM',
+        arguments: ['EPctMcrEM', 'CPT99205'],
+        formula: (EPctMcrEM : number, CPT99205 : number) => {
+          return  EPctMcrEM * CPT99205
+        }
+      },
+    ]
+  },
+  {
+    title : 'Pull Through Rate',
     input: [
       {
         name: 'Average Monthly New Patient Visits',
-        abbreviation: 'AvMNPVs',
+        id: 'AvMNPVs',
         type: 'number',
       },
       {
         name: 'Average Monthly Bariatric Surgeries',
-        abbreviation: 'AvMBSs',
+        id: 'AvMBSs',
         type: 'number',
       },
       {
         name: 'Percentage or Number Increase in New Patient Visits',
-        abbreviation: null,
+        id: 'PNINPV',
         type: 'number',
       },
     ],
     estimate: [
       {
         name: 'Pull Through Rate',
-        abbreviation: 'PTR',
+        id: 'PTR',
+        arguments: ['AvMBSs', 'AvMNPVs'],
         formula: (AvMBSs : number, AvMNPVs : number) => {
           return  AvMBSs/AvMNPVs
         }
       },
       {
         name: 'Additional Monthly New Patient Visits',
-        abbreviation: 'AdMNPVs',
+        id: 'AdMNPVs',
+        arguments: ['AvMBSs', 'AvMNPVs'],
         formula: (AvMNPVs : number, NewPatientVisits : number) => {
           return  AvMNPVs * NewPatientVisits
         }
@@ -180,109 +356,69 @@ export const data = [
     ]
   },
   {
-    title : 'Estimate F',
+    title : 'Average Monthly New Patient',
     input: [
       {
-        name: 'Average Monthly New Patient Visits',
-        abbreviation: 'AvMNPVs',
+        name: 'Percentage of Medicare Reimbursement for Commercial Evaluation and Management Codes',
+        id: 'CPctMCREM',
         type: 'number',
       },
       {
-        name: 'Average Monthly Bariatric Surgeries',
-        abbreviation: 'AvMBSs',
+        name: 'Percentage of Medicare Reimbursement for Exchange Evaluation and Management Codes',
+        id: 'EPctMcrEM',
         type: 'number',
       },
       {
-        name: 'Percentage or Number Increase in New Patient Visits',
-        abbreviation: null,
+        name: 'Percentage of Medicare Reimbursement for Medicaid Evaluation and Management Codes',
+        id: 'McdPctMcrEM',
+        type: 'number',
+      },
+      // {
+      //   name: 'Percentage of Medicare Reimbursement for Medicare Evaluation and Management Codes',
+      //   id: 'McrPctMcrEM',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Commercial',
+      //   id: 'PctNPVsC',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Exchange',
+      //   id: 'PctNPVsE',
+      //   type: 'number',
+      // },
+      // {
+      //   name: 'Percentage of New Patient Visits Medicaid',
+      //   id: 'PctNPVsMcd',
+      //   type: 'number',
+      // },
+      {
+        name: 'Percentage of New Patient Visits Medicare',
+        id: 'PctNPVsMcr',
+        type: 'number',
+      },
+      {
+        name: 'Medicare Reimbursement for New Patient Visit',
+        id: 'CPT99205',
         type: 'number',
       },
     ],
     estimate: [
       {
-        name: 'Pull Through Rate',
-        abbreviation: 'PTR',
-        formula: (AvMBSs : number, AvMNPVs : number) => {
-          return  AvMBSs/AvMNPVs
+        name: 'Commercial Reimbursement',
+        id: 'CREM',
+        arguments: ['CPctMCREM', 'CPT99205'],
+        formula: (CPctMCREM : number, CPT99205 : number) => {
+          return  CPctMCREM * CPT99205
         }
       },
       {
-        name: 'Additional Monthly New Patient Visits',
-        abbreviation: 'AdMNPVs',
-        formula: (AvMNPVs : number, NewPatientVisits : number) => {
-          return  AvMNPVs * NewPatientVisits
-        }
-      },
-    ]
-  },
-  {
-    title : 'Estimate G',
-    input: [
-      {
-        name: 'Average Monthly New Patient Visits',
-        abbreviation: 'AvMNPVs',
-        type: 'number',
-      },
-      {
-        name: 'Average Monthly Bariatric Surgeries',
-        abbreviation: 'AvMBSs',
-        type: 'number',
-      },
-      {
-        name: 'Percentage or Number Increase in New Patient Visits',
-        abbreviation: null,
-        type: 'number',
-      },
-    ],
-    estimate: [
-      {
-        name: 'Pull Through Rate',
-        abbreviation: 'PTR',
-        formula: (AvMBSs : number, AvMNPVs : number) => {
-          return  AvMBSs/AvMNPVs
-        }
-      },
-      {
-        name: 'Additional Monthly New Patient Visits',
-        abbreviation: 'AdMNPVs',
-        formula: (AvMNPVs : number, NewPatientVisits : number) => {
-          return  AvMNPVs * NewPatientVisits
-        }
-      },
-    ]
-  },
-  {
-    title : 'Estimate H',
-    input: [
-      {
-        name: 'Average Monthly New Patient Visits',
-        abbreviation: 'AvMNPVs',
-        type: 'number',
-      },
-      {
-        name: 'Average Monthly Bariatric Surgeries',
-        abbreviation: 'AvMBSs',
-        type: 'number',
-      },
-      {
-        name: 'Percentage or Number Increase in New Patient Visits',
-        abbreviation: null,
-        type: 'number',
-      },
-    ],
-    estimate: [
-      {
-        name: 'Pull Through Rate',
-        abbreviation: 'PTR',
-        formula: (AvMBSs : number, AvMNPVs : number) => {
-          return  AvMBSs/AvMNPVs
-        }
-      },
-      {
-        name: 'Additional Monthly New Patient Visits',
-        abbreviation: 'AdMNPVs',
-        formula: (AvMNPVs : number, NewPatientVisits : number) => {
-          return  AvMNPVs * NewPatientVisits
+        name: 'Exchange Reimbursemen',
+        id: 'EREM',
+        arguments: ['EPctMcrEM', 'CPT99205'],
+        formula: (EPctMcrEM : number, CPT99205 : number) => {
+          return  EPctMcrEM * CPT99205
         }
       },
     ]
