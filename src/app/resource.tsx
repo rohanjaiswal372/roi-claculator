@@ -3,13 +3,13 @@ export const data = [
     title : 'Pull Through Rate',
     input: [
       {
-        name: 'Average Monthly Bariatric Surgeries',
-        id: 'AvMBSs',
+        name: 'Average Monthly New Patient Visits',
+        id: 'AvMNPVs',
         type: 'number',
       },
       {
-        name: 'Percentage or Number Increase in New Patient Visits',
-        id: 'PNINPV',
+        name: 'Average Monthly Bariatric Surgeries',
+        id: 'AvMBSs',
         type: 'number',
       },
     ],
