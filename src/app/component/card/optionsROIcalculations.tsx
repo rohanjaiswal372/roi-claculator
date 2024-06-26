@@ -1,6 +1,11 @@
 import React from 'react'
 
-const formC = () => {
+type OptionsROIcalculations = {
+  onSubmitROIcalculations: (dataType: string) => void;
+  cardData: any;
+};
+
+const optionsROIcalculations = ({ onSubmitROIcalculations, cardData }: OptionsROIcalculations) => {
   return (
     <div >
       <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">How Do you Want to Perform the ROI calculations ? </h1>
@@ -20,6 +25,7 @@ const formC = () => {
             <div className='w-96 content-center'>
               <button
                 type="submit"
+                onClick={() => { onSubmitROIcalculations('INP')}}
                 className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
               >
                 based a certain number increase/mon for new patient consults (#INP)
@@ -28,6 +34,7 @@ const formC = () => {
             <div className='w-96 content-center'>
               <button
                 type="submit"
+                onClick={() => { onSubmitROIcalculations('ISURG')}}
                 className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
               >
                 based a certain number increase/mon of completed surgeries? (#ISurg)
@@ -36,6 +43,7 @@ const formC = () => {
             <div className='w-96 content-center'>
               <button
                 type="submit"
+                onClick={() => { onSubmitROIcalculations('IPTR')}}
                 className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
               >
                 based % increase in pull through rate (%IPTR)?
@@ -44,6 +52,7 @@ const formC = () => {
             <div className='w-96 content-center'>
               <button
                 type="submit"
+                onClick={() => { onSubmitROIcalculations('ISURG')}}
                 className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
               >
                 based a certain number increase/mon for new patients consults (#INP) and completed surgeries (#ISurg)?
@@ -53,6 +62,7 @@ const formC = () => {
             <div className='w-96 content-center'>
               <button
                 type="submit"
+                onClick={() => { onSubmitROIcalculations('IPTR')}}
                 className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
               >
                 based a certain number increase/mon for new patients consults (#INP) and % increase in pull through rate (%IPTR)?
@@ -65,4 +75,4 @@ const formC = () => {
   )
 }
 
-export default formC
+export default optionsROIcalculations
