@@ -1,5 +1,5 @@
 'use client';
-import { medicare_average_reimbursement, marcs, ASMBS_marcs } from '@/app/resource'
+import { medicare_average_reimbursement, marcs, ASMBS_marcs, ROI_CALCULATION_OPTIONS } from '@/app/resource'
 import PatientSurgeryVolume from '@/app/component/card/patientSurgeryVolume'
 import FinancialUserInputs from '@/app/component/card/financialUserInputs'
 import OptionsROIcalculations from '@/app/component/card/optionsROIcalculations'
@@ -19,6 +19,7 @@ export default function Home() {
   const [cardData, setCardData] = useState({});
   const [patientSurgeryVolumeData, setPatientSurgeryVolumeData] = useState({});
 
+  //step 1
   const onSubmitPatientSurgeryVolume = (e: React.FormEvent) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
@@ -42,6 +43,7 @@ export default function Home() {
     }));
   }
 
+  //step 2
   const onSubmitFinancialUserInputs = (dataType: string): void => {
     switch (dataType) {
       case "medicalAvgData":
@@ -51,6 +53,7 @@ export default function Home() {
         }))
         break;
       case "customFinancialData":
+        //todo
         // setCardData(prevState => ({
         //   ...prevState,
         //   acturalPracticeReimbursement : ''
@@ -67,29 +70,12 @@ export default function Home() {
     }));
   };
 
-  const onSubmitROIcalculations = (dataType: string): void => {
-    switch (dataType) {
-      case "INP":
-        setCardData(prevState => ({
-          ...prevState,
-          acturalPracticeReimbursement: (cardData as { patientSurgeryVolumeData: { EMS: number } }).patientSurgeryVolumeData.EMS * medicare_average_reimbursement.Marcs,
-        }))
-        break;
-      case "ISURG":
-        // setCardData(prevState => ({
-        //   ...prevState,
-        //   acturalPracticeReimbursement : ''
-        // }))
-        break;
-      case "IPTR":
-        // setCardData(prevState => ({
-        //   ...prevState,
-        //   acturalPracticeReimbursement : ''
-        // }))
-        break;
-      default:
-        throw new Error(`Invalid data type: ${dataType}`);
-    }
+  //step 3
+  const onSubmitROIcalculations = (key: number): void => {
+    setCardData(prevState => ({
+      ...prevState,
+      selectedRoi: ROI_CALCULATION_OPTIONS.find((option) => option.key === key),
+    }))
     //setActiveFlage
     setIsActive(prevState => ({
       ...prevState,
@@ -100,16 +86,20 @@ export default function Home() {
 
   const onSubmitWhatIfCard = (e: React.FormEvent) => {
     e.preventDefault();
-    const target = e.target as typeof e.target & {
-      INP: { value: number };
-    };
-    //setData
-    //(cardData as { patientSurgeryVolumeData: { EMS: number } }).patientSurgeryVolumeData.EMS * medicare_average_reimbursement.Marcs
+    const keys = (cardData as { selectedRoi: any }).selectedRoi.whatIf.map( (el : any) => el.id)
+
+    const target: { [key: string]: string } = {};
+    keys.forEach((label: string) => {
+        // Access input value dynamically using label (key)
+        const inputValue = (e.target as any)[label].value; // Assuming each input has a 'name' attribute set to the label
+        target[label] = inputValue;
+    });
+
     setCardData(prevState => ({
       ...prevState,
-      INP: target.INP.value,
-      VBL: (target.INP.value * medicare_average_reimbursement.Marcs) * (cardData as { patientSurgeryVolumeData: { CPTR: number } }).patientSurgeryVolumeData.CPTR
-    }))
+      ...(cardData as { selectedRoi: any }).selectedRoi.calculate(target, cardData)
+    }));
+  
     //setActiveFlage
     setIsActive(prevState => ({
       ...prevState,
@@ -124,8 +114,9 @@ export default function Home() {
       <div className="bg-[#F2F2F2] artboard artboard-horizontal phone-10 w-10/12 rounded p-8">
         {isActive.PatientSurgeryVolume && <PatientSurgeryVolume onSubmitPatientSurgeryVolume={onSubmitPatientSurgeryVolume} />}
         {isActive.FinancialUserInputs && <FinancialUserInputs cardData={cardData} onSubmitFinancialUserInputs={onSubmitFinancialUserInputs} />}
-        {isActive.OptionsROIcalculations && <OptionsROIcalculations cardData={cardData} onSubmitROIcalculations={onSubmitROIcalculations}/>}
-        {isActive.WhatIf && <WhatIf cardData={cardData} onSubmitWhatIfCard={onSubmitWhatIfCard}/>}
+        {isActive.OptionsROIcalculations && <OptionsROIcalculations options={ROI_CALCULATION_OPTIONS} onSubmitROIcalculations={onSubmitROIcalculations}/>}
+        {isActive.WhatIf && <WhatIf selectedROI={(cardData as { selectedRoi: any }).selectedRoi} 
+        onSubmitWhatIfCard={onSubmitWhatIfCard}/>}
         {isActive.OutputROI && <OutputROI cardData={cardData}/>}
       </div>
     </main>

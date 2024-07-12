@@ -1,11 +1,12 @@
 import React from 'react'
 
 type OptionsROIcalculations = {
-  onSubmitROIcalculations: (dataType: string) => void;
-  cardData: any;
+  onSubmitROIcalculations: (dataType: number) => void;
+  options: any;
 };
 
-const optionsROIcalculations = ({ onSubmitROIcalculations, cardData }: OptionsROIcalculations) => {
+const optionsROIcalculations = ({ onSubmitROIcalculations, options }: OptionsROIcalculations) => {
+
   return (
     <div >
       <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">How Do you Want to Perform the ROI calculations ? </h1>
@@ -22,52 +23,17 @@ const optionsROIcalculations = ({ onSubmitROIcalculations, cardData }: OptionsRO
         </div>
         <div className='col-span-2 my-10 py-10'>
           <div className="grid gap-8 place-content-center border-l border-gray-900/10">
-            <div className='w-96 content-center'>
-              <button
-                type="submit"
-                onClick={() => { onSubmitROIcalculations('INP')}}
-                className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
-              >
-                based a certain number increase/mon for new patient consults (#INP)
-              </button>
-            </div>
-            <div className='w-96 content-center'>
-              <button
-                type="submit"
-                onClick={() => { onSubmitROIcalculations('ISURG')}}
-                className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
-              >
-                based a certain number increase/mon of completed surgeries? (#ISurg)
-              </button>
-            </div>
-            <div className='w-96 content-center'>
-              <button
-                type="submit"
-                onClick={() => { onSubmitROIcalculations('IPTR')}}
-                className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
-              >
-                based % increase in pull through rate (%IPTR)?
-              </button>
-            </div>
-            <div className='w-96 content-center'>
-              <button
-                type="submit"
-                onClick={() => { onSubmitROIcalculations('ISURG')}}
-                className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
-              >
-                based a certain number increase/mon for new patients consults (#INP) and completed surgeries (#ISurg)?
-
-              </button>
-            </div>
-            <div className='w-96 content-center'>
-              <button
-                type="submit"
-                onClick={() => { onSubmitROIcalculations('IPTR')}}
-                className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
-              >
-                based a certain number increase/mon for new patients consults (#INP) and % increase in pull through rate (%IPTR)?
-              </button>
-            </div>
+            {options ? options.map((calculate: any) => (
+              <div className='w-96 content-center' key={calculate.key}>
+                <button
+                  type="submit"
+                  onClick={() => { onSubmitROIcalculations(calculate.key) }}
+                  className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
+                >
+                  {calculate.description}
+                </button>
+              </div>
+            )) : ''}
           </div>
         </div>
       </form>
