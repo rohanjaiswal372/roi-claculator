@@ -1,6 +1,6 @@
 import React from 'react'
 
-const outputROI = ({cardData} : any) => {
+const outputROI = ({ cardData }: any) => {
   return (
     <div >
       <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">ROI Output</h1>
@@ -9,7 +9,7 @@ const outputROI = ({cardData} : any) => {
           <div className="grid place-content-center ">
             <div className="card bg-[#FEF1F0] border-2 border-black text-gray-900">
               <div className="card-body items-center text-center">
-                <p>Based your Input of a projected  increase in New consults per month without improving your business operations by improving consult to surgery pull-through here is your results using financial calculations based on medicare reimbursement averages:</p>
+                <p>{cardData.ROIData.description}</p>
               </div>
             </div>
           </div>
@@ -17,48 +17,42 @@ const outputROI = ({cardData} : any) => {
 
         <div>
           <div className="h-56 grid gap-10 place-content-center ">
-            <div className="card bg-[#54c45e] text-gray-900">
-              <div className="card-body items-center text-center px-14 py-4">
-                <p>VBL: {cardData.VBL}</p>
+            {cardData.ROIData.setA.map((el: any, idx: any) =>
+              <div className="card bg-[#54c45e] text-gray-900" key={idx}>
+                <div className="card-body items-center text-center px-14 py-4">
+                  <p>{el.key}: {el.value}</p>
+                </div>
               </div>
-            </div>
-            <div className="card bg-[#54c45e] text-gray-900">
-              <div className="card-body items-center text-center px-14 py-4">
-                <p>VBL#x12: {cardData.VBL * 12}</p>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
 
         <div>
           <div className="h-56 grid gap-10 place-content-center ">
-            <div className="card bg-[#54c45e] text-gray-900">
-              <div className="card-body items-center text-center px-14 py-4">
-                <p>ROIbl#: {cardData.VBL}</p>
+            {cardData.ROIData.setB.map((el: any, idx: any) =>
+              <div className="card bg-[#54c45e] text-gray-900" key={idx}>
+                <div className="card-body items-center text-center px-14 py-4">
+                  <p>{el.key}: {el.value}</p>
+                </div>
               </div>
-            </div>
-            <div className="card bg-[#54c45e] text-gray-900">
-              <div className="card-body items-center text-center px-14 py-4">
-                <p>ROIbl#x12: {cardData.VBL * 12}</p>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
         <div>
-          <div className="h-56 grid gap-10 place-content-center ">
-            <div className="card bg-[#54c45e] text-gray-900">
-              <div className="card-body items-center text-center px-14 py-4">
-                <p>#INP: {cardData.INP}</p>
-              </div>
+          {cardData.ROIData.setC.map((c: any, idx: any) =>
+            <div className="h-32 grid grid-cols-2  gap-x-10 place-content-center" key={idx}>
+              {c.map((el: any, i: any) =>
+                <div className="card bg-[#54c45e] text-gray-900" >
+                  <div className="card-body items-center text-center px-14 py-4">
+                    <p>{el.key}: {el.value}</p>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="card bg-[#54c45e] text-gray-900">
-              <div className="card-body items-center text-center px-14 py-4">
-                <p>#INPx12: {cardData.INP * 12}</p>
-              </div>
-            </div>
-          </div>
+          )}
+
         </div>
         <div className='col-span-2'>
           <form className="grid grid-rows-1 grid-cols-2">

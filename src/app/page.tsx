@@ -1,11 +1,45 @@
 'use client';
-import { medicare_average_reimbursement, marcs, ASMBS_marcs, ROI_CALCULATION_OPTIONS } from '@/app/resource'
+import { WHATIF_INPUTS, ROI_CALCULATION_INPUTS, MARCS } from '@/app/resource'
 import PatientSurgeryVolume from '@/app/component/card/patientSurgeryVolume'
 import FinancialUserInputs from '@/app/component/card/financialUserInputs'
 import OptionsROIcalculations from '@/app/component/card/optionsROIcalculations'
 import WhatIf from '@/app/component/card/whatIf'
 import OutputROI from '@/app/component/card/outputROI'
 import { useState } from 'react';
+
+interface SurgeryData {
+  ENP: number | null;
+  EMS: number | null;
+  CPTR: number | null;
+}
+
+interface FinancialData {
+  APR: number | null;
+}
+
+interface WhatIfCardData {
+  APR?: number | null;
+}
+
+interface ROIOption {
+  selectedROIOption: number | null;
+}
+
+interface ROIData {
+  description: string | null;
+  setA: { key: string | null; value: number | null}[];
+  setB: { key: string | null; value: number | null }[];
+  setC: { key: string | null ; value: number | null}[];
+}
+
+interface CardData {
+  patientSurgeryData: SurgeryData;
+  financialData: FinancialData;
+  ROIOption: ROIOption;
+  ROIData: ROIData;
+  whatIfCardData: WhatIfCardData;
+}
+
 
 export default function Home() {
   const [isActive, setIsActive] = useState({
@@ -16,24 +50,33 @@ export default function Home() {
     OutputROI: false,
   })
 
-  const [cardData, setCardData] = useState({});
-  const [patientSurgeryVolumeData, setPatientSurgeryVolumeData] = useState({});
+  const [cardData, setCardData] = useState<CardData>({
+    patientSurgeryData: {
+      ENP: null,
+      EMS: null,
+      CPTR: null
+    },
+    financialData: {
+      APR: null,
+    },
+    ROIOption: {
+      selectedROIOption: null
+    },
+    ROIData: {
+      description: null,
+      setA: [{ key: null, value: null }],
+      setB: [{ key: null, value: null }],
+      setC: [] 
+    },
+    whatIfCardData : {}
+  });
 
   //step 1
-  const onSubmitPatientSurgeryVolume = (e: React.FormEvent) => {
-    e.preventDefault();
-    const target = e.target as typeof e.target & {
-      ENP: { value: number };
-      EMS: { value: number };
-    };
+  const onSubmitPatientSurgeryVolume = (surgeryData : SurgeryData) => {    
     //setData
     setCardData(prevState => ({
       ...prevState,
-      patientSurgeryVolumeData: {
-        ENP: target.ENP.value,
-        EMS: target.EMS.value,
-        CPTR: target.EMS.value / target.ENP.value
-      }
+      patientSurgeryData: surgeryData
     }))
     //setActiveFlage
     setIsActive(prevState => ({
@@ -44,24 +87,14 @@ export default function Home() {
   }
 
   //step 2
-  const onSubmitFinancialUserInputs = (dataType: string): void => {
-    switch (dataType) {
-      case "medicalAvgData":
-        setCardData(prevState => ({
-          ...prevState,
-          acturalPracticeReimbursement: (cardData as { patientSurgeryVolumeData: { EMS: number } }).patientSurgeryVolumeData.EMS * medicare_average_reimbursement.Marcs,
-        }))
-        break;
-      case "customFinancialData":
-        //todo
-        // setCardData(prevState => ({
-        //   ...prevState,
-        //   acturalPracticeReimbursement : ''
-        // }))
-        break;
-      default:
-        throw new Error(`Invalid data type: ${dataType}`);
-    }
+  const onSubmitFinancialUserInputs = (value: number): void => {
+    setCardData(prevState => ({
+      ...prevState,
+      financialData: {
+        APR: value,
+      }
+    }))
+    
     //setActiveFlage
     setIsActive(prevState => ({
       ...prevState,
@@ -71,11 +104,14 @@ export default function Home() {
   };
 
   //step 3
-  const onSubmitROIcalculations = (key: number): void => {
+  const onSubmitROIOption = (key: number): void => {
     setCardData(prevState => ({
       ...prevState,
-      selectedRoi: ROI_CALCULATION_OPTIONS.find((option) => option.key === key),
+      ROIOption: {
+        selectedROIOption: key
+      }
     }))
+    
     //setActiveFlage
     setIsActive(prevState => ({
       ...prevState,
@@ -84,40 +120,32 @@ export default function Home() {
     }));
   };
 
-  const onSubmitWhatIfCard = (e: React.FormEvent) => {
-    e.preventDefault();
-    const keys = (cardData as { selectedRoi: any }).selectedRoi.whatIf.map( (el : any) => el.id)
+  const onSubmitWhatIfCard = (res : any, selectedOption : any) => {
 
-    const target: { [key: string]: string } = {};
-    keys.forEach((label: string) => {
-        // Access input value dynamically using label (key)
-        const inputValue = (e.target as any)[label].value; // Assuming each input has a 'name' attribute set to the label
-        target[label] = inputValue;
-    });
+    const calculationResult = selectedOption.calculate(res, cardData);
 
     setCardData(prevState => ({
       ...prevState,
-      ...(cardData as { selectedRoi: any }).selectedRoi.calculate(target, cardData)
+      whatIfCardData: {...res},
+      ROIData: calculationResult
     }));
-  
+
     //setActiveFlage
     setIsActive(prevState => ({
       ...prevState,
       WhatIf: false,
-      OutputROI: true,  
+      OutputROI: true,
     }));
   }
-
 
   return (
     <main className="bg-[#27413e] flex min-h-screen flex-col items-center justify-between p-24">
       <div className="bg-[#F2F2F2] artboard artboard-horizontal phone-10 w-10/12 rounded p-8">
         {isActive.PatientSurgeryVolume && <PatientSurgeryVolume onSubmitPatientSurgeryVolume={onSubmitPatientSurgeryVolume} />}
-        {isActive.FinancialUserInputs && <FinancialUserInputs cardData={cardData} onSubmitFinancialUserInputs={onSubmitFinancialUserInputs} />}
-        {isActive.OptionsROIcalculations && <OptionsROIcalculations options={ROI_CALCULATION_OPTIONS} onSubmitROIcalculations={onSubmitROIcalculations}/>}
-        {isActive.WhatIf && <WhatIf selectedROI={(cardData as { selectedRoi: any }).selectedRoi} 
-        onSubmitWhatIfCard={onSubmitWhatIfCard}/>}
-        {isActive.OutputROI && <OutputROI cardData={cardData}/>}
+        {isActive.FinancialUserInputs && <FinancialUserInputs marcs={MARCS} cardData={cardData} onSubmitFinancialUserInputs={onSubmitFinancialUserInputs} />}
+        {isActive.OptionsROIcalculations && <OptionsROIcalculations roiOptions={ROI_CALCULATION_INPUTS} onSubmitROIOption={onSubmitROIOption} />}
+        {isActive.WhatIf && <WhatIf whatIfOptions={WHATIF_INPUTS} cardData={cardData} onSubmitWhatIfCard={onSubmitWhatIfCard} />}
+        {isActive.OutputROI && <OutputROI cardData={cardData} />}
       </div>
     </main>
   );
