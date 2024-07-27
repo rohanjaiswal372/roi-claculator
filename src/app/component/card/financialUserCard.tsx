@@ -37,14 +37,14 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
     const formData = new FormData(form);
 
     const formValues: FormValues = {
-      MC: parseFloat(formData.get('MC') as number),
-      MCI: parseFloat(formData.get('MCI') as number),
-      C: parseFloat(formData.get('C') as number),
-      CRMC: parseFloat(formData.get('CRMC') as number),
-      GBP: parseFloat(formData.get('GBP') as number),
-      VSG: parseFloat(formData.get('VSG') as number),
-      DS: parseFloat(formData.get('DS') as number),
-      AGB: parseFloat(formData.get('AGB') as number),
+      MC: parseFloat(formData.get('MC') as string),
+      MCI: parseFloat(formData.get('MCI') as string),
+      C: parseFloat(formData.get('C') as string),
+      CRMC: parseFloat(formData.get('CRMC') as string),
+      GBP: parseFloat(formData.get('GBP') as string),
+      VSG: parseFloat(formData.get('VSG') as string),
+      DS: parseFloat(formData.get('DS') as string),
+      AGB: parseFloat(formData.get('AGB') as string),
     };
 
     //calculate the avg medicare reimbursement based on procedure mix (Mr%ofprocedures):
