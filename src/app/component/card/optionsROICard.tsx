@@ -5,7 +5,7 @@ type OptionsROIcalculations = {
   roiOptions: any;
 };
 
-const optionsROIcalculations = ({ onSubmitROIOption, roiOptions }: OptionsROIcalculations) => {
+const optionsROICard = ({ onSubmitROIOption, roiOptions }: OptionsROIcalculations) => {
   return (
     <div >
       <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">How Do you Want to Perform the ROI calculations ? </h1>
@@ -39,4 +39,4 @@ const optionsROIcalculations = ({ onSubmitROIOption, roiOptions }: OptionsROIcal
   )
 }
 
-export default optionsROIcalculations
+export default optionsROICard

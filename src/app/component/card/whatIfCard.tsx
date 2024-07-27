@@ -6,7 +6,7 @@ type WhatIfCardProps = {
   cardData: any
 };
 
-const whatIf = ({ onSubmitWhatIfCard, whatIfOptions, cardData }: WhatIfCardProps) => {
+const whatIfCard = ({ onSubmitWhatIfCard, whatIfOptions, cardData }: WhatIfCardProps) => {
   const selectedOption = whatIfOptions.find((option: any) => option.key === cardData.ROIOption.selectedROIOption);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +38,7 @@ const whatIf = ({ onSubmitWhatIfCard, whatIfOptions, cardData }: WhatIfCardProps
                     </label>
                     <div className="mt-2">
                       <input
+                      required
                         type="text"
                         name={el.key}
                         id={el.key}
@@ -69,4 +70,4 @@ const whatIf = ({ onSubmitWhatIfCard, whatIfOptions, cardData }: WhatIfCardProps
   )
 }
 
-export default whatIf
+export default whatIfCard

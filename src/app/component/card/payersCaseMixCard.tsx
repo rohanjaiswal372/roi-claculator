@@ -1,4 +1,3 @@
-'use client';
 import React from 'react'
 import { PATIENT_SURGERY_INPUTS } from '@/app/resource'
 
@@ -12,7 +11,7 @@ type PatientSurgeryVolumeProps = {
   onSubmitPatientSurgeryVolume: (surgeryData :SurgeryData) => void;
 };
 
-const PatientSurgeryVolume = ({ onSubmitPatientSurgeryVolume }: PatientSurgeryVolumeProps) => {
+const payersCaseMixCard = ({ onSubmitPatientSurgeryVolume }: PatientSurgeryVolumeProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
@@ -29,7 +28,6 @@ const PatientSurgeryVolume = ({ onSubmitPatientSurgeryVolume }: PatientSurgeryVo
 
     onSubmitPatientSurgeryVolume(surgeryData);
   }
-
   return (
     <div >
       <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">Patient and Surgery Volume User Inputs</h1>
@@ -76,4 +74,4 @@ const PatientSurgeryVolume = ({ onSubmitPatientSurgeryVolume }: PatientSurgeryVo
   )
 }
 
-export default PatientSurgeryVolume;
+export default payersCaseMixCard

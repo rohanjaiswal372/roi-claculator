@@ -9,21 +9,10 @@ export const AVERAGE_REIMBURSEMENT = {
 };
 
 export const MARCS: number =
-  (AVERAGE_REIMBURSEMENT.MrGBP +
-    AVERAGE_REIMBURSEMENT.MrVSG +
-    AVERAGE_REIMBURSEMENT.MrDS +
-    AVERAGE_REIMBURSEMENT.MrAGB) /
-  4 +
-  AVERAGE_REIMBURSEMENT.MrEGD +
-  AVERAGE_REIMBURSEMENT.MrConsult;
+  (AVERAGE_REIMBURSEMENT.MrGBP + AVERAGE_REIMBURSEMENT.MrVSG + AVERAGE_REIMBURSEMENT.MrDS + AVERAGE_REIMBURSEMENT.MrAGB) / 4 + AVERAGE_REIMBURSEMENT.MrEGD + AVERAGE_REIMBURSEMENT.MrConsult;
 
 export const ASMBS_MARCS: number =
-  AVERAGE_REIMBURSEMENT.MrGBP * 0.27 +
-  AVERAGE_REIMBURSEMENT.MrVSG * 0.69 +
-  AVERAGE_REIMBURSEMENT.MrDS * 0.03 +
-  AVERAGE_REIMBURSEMENT.MrAGB * 0.01 +
-  AVERAGE_REIMBURSEMENT.MrEGD +
-  AVERAGE_REIMBURSEMENT.MrConsult;
+  AVERAGE_REIMBURSEMENT.MrGBP * 0.27 + AVERAGE_REIMBURSEMENT.MrVSG * 0.69 + AVERAGE_REIMBURSEMENT.MrDS * 0.03 + AVERAGE_REIMBURSEMENT.MrAGB * 0.01 + AVERAGE_REIMBURSEMENT.MrEGD + AVERAGE_REIMBURSEMENT.MrConsult;
 
 export const PATIENT_SURGERY_INPUTS = [
   {
@@ -39,6 +28,30 @@ export const PATIENT_SURGERY_INPUTS = [
       "What is your Estimated number of monthly Completed Surgeries?",
     label: "Enter value:  EMS",
     key: "EMS",
+  },
+];
+
+export const PAYER_CASE_INPUTS = [
+  {
+    id: 1,
+    description:
+      "What is your Practice Payer Mix  by percentage?",
+    label: ["Medicare = MC%", "Medicaid = MCI%", "Commercial = C%"],
+    key: "PPP",
+  },
+  {
+    id: 2,
+    description:
+      "What is your commerical reimbursement as a % of Medicare (CR%MC) (EG:  our contracts are generally 125% of medicare)",
+    label: ["Commerical reimpursemnt as a % of Medicare = CR%MC"],
+    key: "CRM",
+  },
+  {
+    id: 2,
+    description:
+      "What is your case mix of procedures?",
+    label: ["Percent Gastric Bypass: %GBP", "Percent Sleeve: %VSG", "Percent DS or SADI: %DS", "Percent Band: %AGB"],
+    key: "CMP",
   },
 ];
 
@@ -113,28 +126,28 @@ export const WHATIF_INPUTS = [
         label: "Enter Value:  #INP",
       },
     ],
-    calculate: (input: any, cartData: any) => {
+    calculate: (input: any, cardData: any, reimbursement: any) => {
       return {
         description:
           "Based your Input of a projected  increase in New consults per month without improving your business operations by improving consult to surgery pull-through here is your results using financial calculations based on medicare reimbursement averages:",
         setA: [
           {
             key: "VBL#",
-            value: input.INP * MARCS * cartData.patientSurgeryData.CPTR,
+            value: input.INP * reimbursement * cardData.patientSurgeryData.CPTR,
           },
           {
             key: "VBL#x12",
-            value: input.INP * MARCS * cartData.patientSurgeryData.CPTR * 12,
+            value: input.INP * reimbursement * cardData.patientSurgeryData.CPTR * 12,
           },
         ],
         setB: [
           {
             key: "ROI",
-            value: input.INP * MARCS * cartData.patientSurgeryData.CPTR,
+            value: input.INP * reimbursement * cardData.patientSurgeryData.CPTR,
           },
           {
             key: "ROI#x12",
-            value: input.INP * MARCS * cartData.patientSurgeryData.CPTR * 12,
+            value: input.INP * reimbursement * cardData.patientSurgeryData.CPTR * 12,
           },
         ],
         setC: [
@@ -163,28 +176,28 @@ export const WHATIF_INPUTS = [
         label: "Enter Value: #ISurg",
       },
     ],
-    calculate: (input: any, cartData: any) => {
+    calculate: (input: any, cardData: any, reimbursement: any) => {
       return {
         description:
           "Based your Input of a projected  increase in surgeries per month without improving your business operations by improving consult to surgery pull-through here is your results using financial calculations based on medicare reimbursement averages:",
         setA: [
           {
             key: "VBL",
-            value: input.ISurg * MARCS,
+            value: input.ISurg * reimbursement,
           },
           {
             key: "VBL#x12",
-            value: input.ISurg * MARCS * 12,
+            value: input.ISurg * reimbursement * 12,
           },
         ],
         setB: [
           {
             key: "ROI",
-            value: input.ISurg * MARCS,
+            value: input.ISurg * reimbursement,
           },
           {
             key: "ROI#x12",
-            value: input.ISurg * MARCS * 12,
+            value: input.ISurg * reimbursement * 12,
           },
         ],
         setC: [
@@ -213,28 +226,31 @@ export const WHATIF_INPUTS = [
         label: "Enter Value: %IPTR",
       },
     ],
-    calculate: (input: any, cartData: any) => {
+    calculate: (input: any, cardData: any, reimbursement: any) => {
+      // Estimated number of monthly Completed Surgeries or 
+      // Estimated number of monthly New Patient Consults
+      const estimate = cardData.financialData.customData ? cardData.patientSurgeryData.EMP : cardData.patientSurgeryData.EMS
       return {
         description:
           "Based your Input of a projected  increase your business operations by improiving yoru consult to surgery putllthrough rate here is your results using financial calculations based on medicare reimbursement averages:",
         setA: [
           {
             key: "VBL",
-            value: input.IPTR * cartData.patientSurgeryData.EMS * MARCS,
+            value: input.IPTR * estimate * reimbursement,
           },
           {
             key: "VBL#x12",
-            value: input.IPTR * cartData.patientSurgeryData.EMS * MARCS * 12,
+            value: input.IPTR * estimate * reimbursement * 12,
           },
         ],
         setB: [
           {
             key: "ROI",
-            value: input.IPTR * cartData.patientSurgeryData.EMS * MARCS,
+            value: input.IPTR * estimate * reimbursement,
           },
           {
             key: "ROI#x12",
-            value: input.IPTR * cartData.patientSurgeryData.EMS * MARCS * 12,
+            value: input.IPTR * estimate * reimbursement * 12,
           },
         ],
         setC: [
@@ -266,7 +282,7 @@ export const WHATIF_INPUTS = [
         label: "Enter Value: #ISurg",
       },
     ],
-    calculate: (input: any, cartData: any) => {
+    calculate: (input: any, cardData: any, reimbursement: any) => {
       return {
         description:
           "Based your Input of a projected  increase in number of new consults seen and surgeries performed per month  without improving your business operations by improving consult to surgery pull-through here is your results using financial calculations based on medicare reimbursement averages:",
@@ -274,14 +290,14 @@ export const WHATIF_INPUTS = [
           {
             key: "VBLBN#",
             value:
-              input.INP * MARCS * cartData.patientSurgeryData.CPTR +
-              input.ISurg * MARCS,
+              input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
+              input.ISurg * reimbursement,
           },
           {
             key: "VBLBN#x12",
             value:
-              (input.INP * MARCS * cartData.patientSurgeryData.CPTR +
-                input.ISurg * MARCS) *
+              (input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
+                input.ISurg * reimbursement) *
               12,
           },
         ],
@@ -289,14 +305,14 @@ export const WHATIF_INPUTS = [
           {
             key: "ROIblbn#",
             value:
-              input.INP * MARCS * cartData.patientSurgeryData.CPTR +
-              input.ISurg * MARCS,
+              input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
+              input.ISurg * reimbursement,
           },
           {
             key: "ROIblbn##x12",
             value:
-              (input.INP * MARCS * cartData.patientSurgeryData.CPTR +
-                input.ISurg * MARCS) *
+              (input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
+                input.ISurg * reimbursement) *
               12,
           },
         ],
@@ -343,7 +359,10 @@ export const WHATIF_INPUTS = [
         label: "Enter Value: %IPTR",
       },
     ],
-    calculate: (input: any, cartData: any) => {
+    calculate: (input: any, cardData: any, reimbursement: any) => {
+      // Estimated number of monthly Completed Surgeries or 
+      // Estimated number of monthly New Patient Consults
+      const estimate = cardData.financialData.customData ? cardData.patientSurgeryData.EMP : cardData.patientSurgeryData.EMS
       return {
         description:
           "Based your Input of a projected  increase in number of new consults seen and projected  increase your business operations by improving your consult to surgery pull-through rate here is your results using financial calculations based on medicare reimbursement averages:",
@@ -351,14 +370,14 @@ export const WHATIF_INPUTS = [
           {
             key: "VBLBN#%",
             value:
-              input.INP * MARCS * cartData.patientSurgeryData.CPTR +
-              input.IPTR * cartData.patientSurgeryData.EMS * MARCS,
+              input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
+              input.IPTR * estimate * reimbursement,
           },
           {
             key: "VBLBN#%x12",
             value:
-              (input.INP * MARCS * cartData.patientSurgeryData.CPTR +
-                input.IPTR * cartData.patientSurgeryData.EMS * MARCS) *
+              (input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
+                input.IPTR * estimate * reimbursement) *
               12,
           },
         ],
@@ -366,14 +385,14 @@ export const WHATIF_INPUTS = [
           {
             key: "ROIblbn#%",
             value:
-              input.INP * MARCS * cartData.patientSurgeryData.CPTR +
-              input.IPTR * cartData.patientSurgeryData.EMS * MARCS,
+              input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
+              input.IPTR * estimate * reimbursement,
           },
           {
             key: "ROIblbn#%x12",
             value:
-              (input.INP * MARCS * cartData.patientSurgeryData.CPTR +
-                input.IPTR * cartData.patientSurgeryData.EMS * MARCS) *
+              (input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
+                input.IPTR * estimate * reimbursement) *
               12,
           },
         ],

@@ -1,8 +1,21 @@
-import React from 'react'
+'use client'
+import React, { useRef } from 'react'
+import { useReactToPrint } from 'react-to-print';
 
-const outputROI = ({ cardData }: any) => {
+type OutputROICardProps = {
+  redoROI: () => void;
+  cardData: any
+};
+
+const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
+  const printComponentRef = useRef(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => printComponentRef.current,
+  });
+
   return (
-    <div >
+    <div ref={printComponentRef}>
       <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">ROI Output</h1>
       <div className="grid grid-rows-2 grid-cols-3 mx-10">
         <div>
@@ -27,7 +40,6 @@ const outputROI = ({ cardData }: any) => {
           </div>
         </div>
 
-
         <div>
           <div className="h-56 grid gap-10 place-content-center ">
             {cardData.ROIData.setB.map((el: any, idx: any) =>
@@ -42,9 +54,9 @@ const outputROI = ({ cardData }: any) => {
 
         <div>
           {cardData.ROIData.setC.map((c: any, idx: any) =>
-            <div className="h-32 grid grid-cols-2  gap-x-10 place-content-center" key={idx}>
+            <div className="h-32 grid grid-cols-2 gap-x-10 place-content-center" key={idx}>
               {c.map((el: any, i: any) =>
-                <div className="card bg-[#54c45e] text-gray-900" >
+                <div className="card bg-[#54c45e] text-gray-900" key={i}>
                   <div className="card-body items-center text-center px-14 py-4">
                     <p>{el.key}: {el.value}</p>
                   </div>
@@ -52,14 +64,15 @@ const outputROI = ({ cardData }: any) => {
               )}
             </div>
           )}
-
         </div>
+
         <div className='col-span-2'>
           <form className="grid grid-rows-1 grid-cols-2">
             <div className="grid place-content-center py-10">
               <div>
                 <button
                   type="submit"
+                  onClick={redoROI}
                   className="rounded-full bg-[#dc5a57] min-w-52 px-14 py-3 text-sm font-semibold text-white shadow-sm"
                 >
                   Redo Calculations
@@ -69,7 +82,8 @@ const outputROI = ({ cardData }: any) => {
             <div className="grid place-content-center py-10">
               <div>
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={handlePrint}
                   className="rounded-full bg-[#dc5a57] min-w-52 px-14 py-3 text-sm font-semibold text-white shadow-sm"
                 >
                   Print
@@ -83,4 +97,4 @@ const outputROI = ({ cardData }: any) => {
   )
 }
 
-export default outputROI
+export default OutputROICard
