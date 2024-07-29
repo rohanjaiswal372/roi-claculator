@@ -1,11 +1,20 @@
 'use client';
 import { WHATIF_INPUTS, ROI_CALCULATION_INPUTS, MARCS } from '@/app/resource'
+import Breadcrumbs from './component/breadcrumbs/breadcrumbs';
 import PatientSurgeryCard from '@/app/component/card/patientSurgeryCard'
 import FinancialUserCard from '@/app/component/card/financialUserCard'
 import OptionsROICard from '@/app/component/card/optionsROICard'
 import WhatIfCard from '@/app/component/card/whatIfCard'
 import OutputROICard from '@/app/component/card/outputROICard'
 import { useState } from 'react';
+
+interface ActiveCardState {
+  PatientSurgeryVolume: boolean;
+  FinancialUserInputs: boolean;
+  OptionsROIcalculations: boolean;
+  WhatIf: boolean;
+  OutputROI: boolean;
+}
 
 interface SurgeryData {
   ENP: number | null;
@@ -29,9 +38,9 @@ interface ROIOption {
 
 interface ROIData {
   description: string | null;
-  setA: { key: string | null; value: number | null}[];
+  setA: { key: string | null; value: number | null }[];
   setB: { key: string | null; value: number | null }[];
-  setC: { key: string | null ; value: number | null}[];
+  setC: { key: string | null; value: number | null }[];
 }
 
 interface CardData {
@@ -44,7 +53,7 @@ interface CardData {
 
 
 export default function Home() {
-  const [isActive, setIsActive] = useState({
+  const [activeCard, setActiveCard] = useState<ActiveCardState>({
     PatientSurgeryVolume: true,
     FinancialUserInputs: false,
     OptionsROIcalculations: false,
@@ -61,7 +70,7 @@ export default function Home() {
     financialData: {
       APR: null,
       ARCS: null,
-      customData : false
+      customData: false
     },
     ROIOption: {
       selectedROIOption: null
@@ -70,9 +79,9 @@ export default function Home() {
       description: null,
       setA: [{ key: null, value: null }],
       setB: [{ key: null, value: null }],
-      setC: [] 
+      setC: []
     },
-    whatIfCardData : {}
+    whatIfCardData: {}
   });
 
   const redoROI = () => {
@@ -85,7 +94,7 @@ export default function Home() {
       financialData: {
         APR: null,
         ARCS: null,
-        customData : false
+        customData: false
       },
       ROIOption: {
         selectedROIOption: null
@@ -94,11 +103,11 @@ export default function Home() {
         description: null,
         setA: [{ key: null, value: null }],
         setB: [{ key: null, value: null }],
-        setC: [] 
+        setC: []
       },
-      whatIfCardData : {}
+      whatIfCardData: {}
     })
-    setIsActive({
+    setActiveCard({
       PatientSurgeryVolume: true,
       FinancialUserInputs: false,
       OptionsROIcalculations: false,
@@ -106,15 +115,27 @@ export default function Home() {
       OutputROI: false,
     })
   }
+
+  const setActiveState = (card: keyof ActiveCardState) => {
+    setActiveCard(prevState => {
+      const newState: ActiveCardState = Object.keys(prevState).reduce((acc, key) => {
+        acc[key as keyof ActiveCardState] = false;
+        return acc;
+      }, {} as ActiveCardState);
+      newState[card] = true;
+      return newState;
+    });
+  };
+
   //step 1
-  const onSubmitPatientSurgeryVolume = (surgeryData : SurgeryData) => {    
+  const onSubmitPatientSurgeryVolume = (surgeryData: SurgeryData) => {
     //setData
     setCardData(prevState => ({
       ...prevState,
       patientSurgeryData: surgeryData
     }))
     //setActiveFlage
-    setIsActive(prevState => ({
+    setActiveCard(prevState => ({
       ...prevState,
       PatientSurgeryVolume: false,
       FinancialUserInputs: true,
@@ -122,7 +143,7 @@ export default function Home() {
   }
 
   //step 2
-  const onSubmitFinancialUserInputs = (APR: number, ARCS? : number): void => {
+  const onSubmitFinancialUserInputs = (APR: number, ARCS?: number): void => {
     setCardData(prevState => ({
       ...prevState,
       financialData: {
@@ -131,9 +152,9 @@ export default function Home() {
         customData: ARCS ? true : false
       }
     }))
-    
+
     //setActiveFlage
-    setIsActive(prevState => ({
+    setActiveCard(prevState => ({
       ...prevState,
       FinancialUserInputs: false,
       OptionsROIcalculations: true
@@ -148,16 +169,16 @@ export default function Home() {
         selectedROIOption: key
       }
     }))
-    
+
     //setActiveFlage
-    setIsActive(prevState => ({
+    setActiveCard(prevState => ({
       ...prevState,
       OptionsROIcalculations: false,
       WhatIf: true
     }));
   };
 
-  const onSubmitWhatIfCard = (res : any, selectedOption : any) => {
+  const onSubmitWhatIfCard = (res: any, selectedOption: any) => {
 
     // Medicare average or custom financial data for reimbursement for a completed surgery
     const reimbursement = cardData.financialData.customData ? cardData.financialData.ARCS : MARCS;
@@ -165,12 +186,12 @@ export default function Home() {
 
     setCardData(prevState => ({
       ...prevState,
-      whatIfCardData: {...res},
+      whatIfCardData: { ...res },
       ROIData: calculationResult
     }));
 
     //setActiveFlage
-    setIsActive(prevState => ({
+    setActiveCard(prevState => ({
       ...prevState,
       WhatIf: false,
       OutputROI: true,
@@ -178,13 +199,18 @@ export default function Home() {
   }
 
   return (
-    <main className="bg-[#27413e] flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="bg-[#F2F2F2] artboard artboard-horizontal phone-10 w-10/12 rounded p-8">
-        {isActive.PatientSurgeryVolume && <PatientSurgeryCard onSubmitPatientSurgeryVolume={onSubmitPatientSurgeryVolume} />}
-        {isActive.FinancialUserInputs && <FinancialUserCard marcs={MARCS} cardData={cardData} onSubmitFinancialUserInputs={onSubmitFinancialUserInputs} />}
-        {isActive.OptionsROIcalculations && <OptionsROICard roiOptions={ROI_CALCULATION_INPUTS} onSubmitROIOption={onSubmitROIOption} />}
-        {isActive.WhatIf && <WhatIfCard whatIfOptions={WHATIF_INPUTS} cardData={cardData} onSubmitWhatIfCard={onSubmitWhatIfCard} />}
-        {isActive.OutputROI && <OutputROICard cardData={cardData} redoROI={redoROI} />}
+    <main className="bg-[#27413e] flex flex-col min-h-screen items-center justify-between p-12">
+      <div className='w-10/12'>
+        <div className="bg-[#F2F2F2] flex flex-row rounded p-8 m-1 mx-auto justify-center">
+          <Breadcrumbs activeCard={activeCard} setActiveState={setActiveState} />
+        </div>
+        <div className="bg-[#F2F2F2] rounded p-8">
+          {activeCard.PatientSurgeryVolume && <PatientSurgeryCard cardData={cardData} onSubmitPatientSurgeryVolume={onSubmitPatientSurgeryVolume} />}
+          {activeCard.FinancialUserInputs && <FinancialUserCard marcs={MARCS} cardData={cardData} onSubmitFinancialUserInputs={onSubmitFinancialUserInputs} />}
+          {activeCard.OptionsROIcalculations && <OptionsROICard roiOptions={ROI_CALCULATION_INPUTS} onSubmitROIOption={onSubmitROIOption} />}
+          {activeCard.WhatIf && <WhatIfCard whatIfOptions={WHATIF_INPUTS} cardData={cardData} onSubmitWhatIfCard={onSubmitWhatIfCard} />}
+          {activeCard.OutputROI && <OutputROICard cardData={cardData} redoROI={redoROI} />}
+        </div>
       </div>
     </main>
   );

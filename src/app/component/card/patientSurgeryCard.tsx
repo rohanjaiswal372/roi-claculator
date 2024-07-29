@@ -10,29 +10,27 @@ interface SurgeryData {
 
 type PatientSurgeryVolumeProps = {
   onSubmitPatientSurgeryVolume: (surgeryData :SurgeryData) => void;
+  cardData: any;
 };
 
-const PatientSurgeryCard = ({ onSubmitPatientSurgeryVolume }: PatientSurgeryVolumeProps) => {
+const PatientSurgeryCard = ({ onSubmitPatientSurgeryVolume, cardData }: PatientSurgeryVolumeProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
-    const formData = new FormData(form);
-    
+    const formData = new FormData(form);    
     const ENP = parseFloat(formData.get('ENP') as string);
     const EMS = parseFloat(formData.get('EMS') as string);
-
     const surgeryData: SurgeryData = {
         ENP,
         EMS,
         CPTR: EMS / ENP
     };
-
     onSubmitPatientSurgeryVolume(surgeryData);
   }
 
   return (
     <div >
-      <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">Patient and Surgery Volume User Inputs</h1>
+      <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">Patient and Surgery Volume User Inputs</h1>
       <form className="grid grid-rows grid-flow-col gap-4" onSubmit={handleSubmit}>
         <div className="row-span-3 col-span-2">
           <div className="space-y-12">
@@ -49,7 +47,7 @@ const PatientSurgeryCard = ({ onSubmitPatientSurgeryVolume }: PatientSurgeryVolu
                         type="number"
                         name={el.key}
                         id={el.key}
-                        placeholder={el.label}
+                        placeholder={cardData.patientSurgeryData?.[el.key] ?? el.key}
                         className="bg-gray-50 block w-full rounded-md border-0 px-1 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -67,7 +65,7 @@ const PatientSurgeryCard = ({ onSubmitPatientSurgeryVolume }: PatientSurgeryVolu
                 type="submit"
                 className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
               >
-                Calculate
+                Submit
               </button>
             </div>
           </div>

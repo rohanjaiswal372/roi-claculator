@@ -20,12 +20,12 @@ interface FormValues {
 
 const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: FinancialUserInputsProps) => {
   const [useCustomFinancialData, setUseCustomFinancialData] = useState<Boolean>(false)
+  const [formData, setFormData] = useState<any>()
   const handleSubmit = (key: string) => {
     if (key === 'MAPTR') {
       const APR = cardData.patientSurgeryData.EMS * marcs;
       onSubmitFinancialUserInputs(APR)
     }
-    //todo
     if (key === 'CFPTR') {
       setUseCustomFinancialData(true)
     }
@@ -46,6 +46,7 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
       DS: parseFloat(formData.get('DS') as string),
       AGB: parseFloat(formData.get('AGB') as string),
     };
+    setFormData(formValues);
 
     //calculate the avg medicare reimbursement based on procedure mix (Mr%ofprocedures):
     //[(MrGBPx%gbp)+ (MrVSSGx%vsg)+(MrAGBx%AGB)+ (MrDSx%DS)]+ MrEGD + MrConsult = Mr%ofprocedures
@@ -62,7 +63,7 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
     const MCIARCS = MRProcedures * 0.8 * formValues.MCI
 
     //the final Arcs calculation will then take into consideration the payor mix
-    const ARCS = (CARCS * formValues.C) + (MARCSA * formValues.MC) + (MCIARCS * formValues.MCI)/3
+    const ARCS = (CARCS * formValues.C) + (MARCSA * formValues.MC) + (MCIARCS * formValues.MCI) / 3
 
     //calculate the actural practice reimbursement (APR)  
     const APR = cardData.patientSurgeryData.EMS * ARCS;
@@ -73,13 +74,13 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
     <div>
       {useCustomFinancialData &&
         <div>
-          <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">Payers and Case Mix</h1>
+          <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">Payers and Case Mix</h1>
           <form onSubmit={handleSubmitPayersCaseMix}>
             {/* Grid 1 */}
             <div className="grid grid-cols-6 gap-4">
               <div className="grid col-span-2">
                 <div className="place-content-center ">
-                  <div className="card bg-[#FEF1F0] border-2 border-black  text-black">
+                  <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4]  text-black">
                     <div className="card-body items-center text-center">
                       <p className="card-title text-sm text-semibold">What is your Practice Payer Mix  by percentage?</p>
                     </div>
@@ -131,7 +132,7 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
             <div className="grid grid-cols-6 gap-4 py-10">
               <div className="grid col-span-2">
                 <div className="place-content-center ">
-                  <div className="card bg-[#FEF1F0] border-2 border-black  text-black">
+                  <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4]  text-black">
                     <div className="card-body items-center text-center">
                       <p className="card-title text-sm text-semibold">What is your commerical reimbursement as a % of Medicare (CR%MC) (EG:  our contracts are generally 125% of medicare)</p>
                     </div>
@@ -171,10 +172,9 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
             </div>
             {/* Grid 3 */}
             <div className="grid grid-cols-6 gap-4">
-
               <div className="grid col-span-2">
                 <div className="place-content-center ">
-                  <div className="card bg-[#FEF1F0] border-2 border-black  text-black">
+                  <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4]  text-black">
                     <div className="card-body items-center text-center">
                       <p className="card-title text-sm text-semibold">What is your case mix of procedures?</p>
                     </div>
@@ -235,31 +235,29 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
 
               <div className='grid col-span-1'></div>
             </div>
-
           </form>
-
         </div>}
       {!useCustomFinancialData &&
         <div>
-          <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">Financial User Inputs</h1>
-          <div className="grid grid-rows grid-flow-col gap-4">
+          <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">Financial User Inputs</h1>
+          <div className="grid grid-rows grid-flow-col">
             <div>
               <div className="h-56 grid gap-4 place-content-center ">
                 <div className="card bg-[#54c45e] text-gray-900">
-                  <div className=" card-body items-center text-center">
-                    <h2 className="card-title">Display the Calculation (EMS / ENP = cPTR)</h2>
-                    <p>{cardData.patientSurgeryData.CPTR}</p>
+                  <div className="card-body items-center text-center">
+                    <h2 className="font-bold">Display the Calculation (EMS / ENP = cPTR)</h2>
+                    <p className='card-title'>{cardData.patientSurgeryData.CPTR}</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="row-span-3 col-span-2">
               <div className="space-y-12">
-                <div className="border-r border-l border-gray-900/10 px-12 py-4">
+                <div className="px-12 py-4">
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="col-span-full">
-                      <div className="card bg-[#FEF1F0] border-2 border-black  text-black">
-                        <div className=" card-body items-center text-center">
+                      <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4] text-black">
+                        <div className="card-body items-center text-center">
                           <p className="card-title text-sm text-semibold">{FINANCIAL_USER_INPUTS.description}</p>
                         </div>
                       </div>

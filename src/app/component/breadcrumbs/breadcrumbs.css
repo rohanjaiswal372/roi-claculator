@@ -1,0 +1,30 @@
+.bc-text {
+  font-size: 16px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+  word-spacing: 2px;
+}
+
+.bc-text:hover {
+  color: #ffa81f;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.bc-active {
+  font-weight: bold;
+  color: #24433d;
+  letter-spacing: 0.5px;
+  word-spacing: 2px;
+}
+
+.bc-disabled {
+  color: grey;
+}
+.bc-disabled:hover {
+  color: grey;
+  font-size: 16px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+  word-spacing: 2px;
+}

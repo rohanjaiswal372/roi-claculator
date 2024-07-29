@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import Breadcrumbs from './breadcrumbs'
+import Breadcrumbs from './breadcrumbs/breadcrumbs'
 import Accordion from './accordion'
 
 function block() {

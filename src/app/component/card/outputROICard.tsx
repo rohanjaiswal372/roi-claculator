@@ -16,11 +16,11 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
 
   return (
     <div ref={printComponentRef}>
-      <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">ROI Output</h1>
+      <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">ROI Output</h1>
       <div className="grid grid-rows-2 grid-cols-3 mx-10">
         <div>
-          <div className="grid place-content-center ">
-            <div className="card bg-[#FEF1F0] border-2 border-black text-gray-900">
+          <div className="grid place-content-center pt-10">
+            <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4] text-gray-900">
               <div className="card-body items-center text-center">
                 <p>{cardData.ROIData.description}</p>
               </div>
@@ -29,10 +29,10 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
         </div>
 
         <div>
-          <div className="h-56 grid gap-10 place-content-center ">
+          <div className="grid gap-10 place-content-center pt-14">
             {cardData.ROIData.setA.map((el: any, idx: any) =>
               <div className="card bg-[#54c45e] text-gray-900" key={idx}>
-                <div className="card-body items-center text-center px-14 py-4">
+                <div className="card-body items-center text-center px-14 py-6">
                   <p>{el.key}: {el.value}</p>
                 </div>
               </div>
@@ -41,22 +41,22 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
         </div>
 
         <div>
-          <div className="h-56 grid gap-10 place-content-center ">
+          <div className="grid gap-10 place-content-center pt-14">
             {cardData.ROIData.setB.map((el: any, idx: any) =>
               <div className="card bg-[#54c45e] text-gray-900" key={idx}>
-                <div className="card-body items-center text-center px-14 py-4">
-                  <p>{el.key}: {el.value}</p>
+                <div className="card-body items-center text-center px-14 py-6">
+                  <p>{el.key}: {el.value} </p>
                 </div>
               </div>
             )}
           </div>
         </div>
 
-        <div>
+        <div className=' mt-10'>
           {cardData.ROIData.setC.map((c: any, idx: any) =>
-            <div className="h-32 grid grid-cols-2 gap-x-10 place-content-center" key={idx}>
+            <div className="grid grid-cols-2 place-content-center" key={idx}>
               {c.map((el: any, i: any) =>
-                <div className="card bg-[#54c45e] text-gray-900" key={i}>
+                <div className="card bg-[#54c45e] text-gray-900 my-2 mx-2" key={i}>
                   <div className="card-body items-center text-center px-14 py-4">
                     <p>{el.key}: {el.value}</p>
                   </div>
@@ -66,14 +66,14 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
           )}
         </div>
 
-        <div className='col-span-2'>
+        <div className='col-span-2 mt-10'>
           <form className="grid grid-rows-1 grid-cols-2">
             <div className="grid place-content-center py-10">
               <div>
                 <button
                   type="submit"
                   onClick={redoROI}
-                  className="rounded-full bg-[#dc5a57] min-w-52 px-14 py-3 text-sm font-semibold text-white shadow-sm"
+                  className="tracking-wide rounded-full bg-[#dc5a57] w-72 py-8 text-sm font-semibold text-white shadow-sm"
                 >
                   Redo Calculations
                 </button>
@@ -84,7 +84,7 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
                 <button
                   type="button"
                   onClick={handlePrint}
-                  className="rounded-full bg-[#dc5a57] min-w-52 px-14 py-3 text-sm font-semibold text-white shadow-sm"
+                  className="tracking-wide rounded-full bg-[#dc5a57] min-w-72 py-8 text-sm font-semibold text-white shadow-sm"
                 >
                   Print
                 </button>

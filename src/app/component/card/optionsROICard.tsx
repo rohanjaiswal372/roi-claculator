@@ -8,25 +8,25 @@ type OptionsROIcalculations = {
 const optionsROICard = ({ onSubmitROIOption, roiOptions }: OptionsROIcalculations) => {
   return (
     <div >
-      <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">How Do you Want to Perform the ROI calculations ? </h1>
-      <form className="grid grid-cols-3">
+      <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">How Do you Want to Perform the ROI calculations ? </h1>
+      <form className="grid grid-cols-2">
         <div className='grid grid-rows-3'>
-          <div className="row-start-2 px-12 py-5">
-            <div className="card bg-[#FEF1F0] border-2 border-black  text-black">
-              <div className=" card-body items-center text-center">
-                <p className="card-title text-sm text-semibold">How Would you like to perform your ROI Calculations?</p>
+          <div className="row-start-2 px-12 py-5 place-content-center">
+            <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4]  text-black">
+              <div className="card-body items-center">
+                <p>How Would you like to perform your ROI Calculations?</p>
               </div>
             </div>
           </div>
         </div>
-        <div className='col-span-2 my-10 py-10'>
-          <div className="grid gap-8 place-content-center border-l border-gray-900/10">
+        <div className='py-10'>
+          <div className="grid gap-8 place-content-center">
             {roiOptions ? roiOptions.options.map((option: any) => (
-              <div className='w-96 content-center' key={option.id}>
+              <div className='content-center' key={option.id}>
                 <button
                   type="submit"
                   onClick={() => { onSubmitROIOption(option.key) }}
-                  className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
+                  className="w-96 rounded-full bg-[#dc5a57] hover:bg-[#ffa81f] px-10 py-5 text-white shadow-xl"
                 >
                   {option.description}
                 </button>

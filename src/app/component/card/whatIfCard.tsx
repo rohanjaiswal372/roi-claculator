@@ -23,7 +23,7 @@ const whatIfCard = ({ onSubmitWhatIfCard, whatIfOptions, cardData }: WhatIfCardP
   }
   return (
     <div >
-      <h1 className="p-10 text-center font-semibold leading-7 text-gray-900">What If?</h1>
+      <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">What If?</h1>
 
       <form className="grid grid-rows grid-flow-col gap-4" onSubmit={handleSubmit}>
         <div className="row-span-3 col-span-2">
@@ -42,7 +42,7 @@ const whatIfCard = ({ onSubmitWhatIfCard, whatIfOptions, cardData }: WhatIfCardP
                         type="text"
                         name={el.key}
                         id={el.key}
-                        placeholder={el.label}
+                        placeholder={cardData.whatIfCardData?.[el.key] ?? el.key}
                         className="bg-gray-50 block w-full rounded-md border-0 px-1 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -57,7 +57,7 @@ const whatIfCard = ({ onSubmitWhatIfCard, whatIfOptions, cardData }: WhatIfCardP
                       type="submit"
                       className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
                     >
-                      Calculate
+                      Submit
                     </button>
                   </div>
                 </div>

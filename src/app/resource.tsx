@@ -309,7 +309,7 @@ export const WHATIF_INPUTS = [
               input.ISurg * reimbursement,
           },
           {
-            key: "ROIblbn##x12",
+            key: "ROIblbn#x12",
             value:
               (input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
                 input.ISurg * reimbursement) *
