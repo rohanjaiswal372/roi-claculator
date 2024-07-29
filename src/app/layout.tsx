@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { useReactToPrint } from 'react-to-print';
 import "./globals.css";
 import NavBar from "@/app/NavBar";
 import Footer from "./footer";
