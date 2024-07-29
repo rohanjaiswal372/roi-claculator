@@ -32,3 +32,21 @@ body {
     text-wrap: balance;
   }
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  /* Ensure the print container and its children are visible */
+  .printable, .printable * {
+    visibility: visible;
+  }
+
+  /* Position the printable area at the top left */
+  .printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

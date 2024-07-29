@@ -77,8 +77,8 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
           <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">Payers and Case Mix</h1>
           <form onSubmit={handleSubmitPayersCaseMix}>
             {/* Grid 1 */}
-            <div className="grid grid-cols-6 gap-4">
-              <div className="grid col-span-2">
+            <div className="grid grid-cols-6 gap-4 pt-10">
+              <div className="grid col-span-3 lg:col-span-2">
                 <div className="place-content-center ">
                   <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4]  text-black">
                     <div className="card-body items-center text-center">
@@ -88,7 +88,7 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
                 </div>
               </div>
 
-              <div className="grid col-span-3 gap-4">
+              <div className="grid col-span-3 lg:col-span-3 gap-4">
                 <div className="place-content-center">
                   <input required
                     type="number"
@@ -126,11 +126,11 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
                   />
                 </div>
               </div>
-              <div className='grid col-span-1'></div>
+              <div className='hidden lg:block grid col-span-1'></div>
             </div>
             {/* Grid 2 */}
             <div className="grid grid-cols-6 gap-4 py-10">
-              <div className="grid col-span-2">
+              <div className="grid col-span-3 lg:col-span-2">
                 <div className="place-content-center ">
                   <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4]  text-black">
                     <div className="card-body items-center text-center">
@@ -155,13 +155,13 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
                 </div>
               </div>
 
-              <div className='grid col-span-1'>
+              <div className='hidden lg:block grid col-span-1'>
                 <div className="h-56 grid gap-4 place-content-center">
                   <div className="grid gap-8 place-content-center">
                     <div className=' content-center' >
                       <button
 
-                        className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
+                        className="rounded-full bg-[#dc5a57] hover:bg-[#ffa81f] px-10 py-3 text-sm font-semibold text-white shadow-sm"
                       >
                         submit
                       </button>
@@ -172,7 +172,7 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
             </div>
             {/* Grid 3 */}
             <div className="grid grid-cols-6 gap-4">
-              <div className="grid col-span-2">
+              <div className="grid col-span-3 lg:col-span-2">
                 <div className="place-content-center ">
                   <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4]  text-black">
                     <div className="card-body items-center text-center">
@@ -233,14 +233,26 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
                 </div>
               </div>
 
-              <div className='grid col-span-1'></div>
+              <div className='hidden lg:block grid col-span-1'></div>
             </div>
+            {/* xs: sm: lg:hidden */}
+            <div className="lg:hidden grid content-middle place-items-center py-10">
+              <div className='' >
+                <button
+
+                  className="rounded-full bg-[#dc5a57] hover:bg-[#ffa81f] px-10 py-3 text-sm font-semibold text-white shadow-sm"
+                >
+                  submit
+                </button>
+              </div>
+            </div>
+
           </form>
         </div>}
       {!useCustomFinancialData &&
         <div>
-          <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">Financial User Inputs</h1>
-          <div className="grid grid-rows grid-flow-col">
+          <h1 className="xs:text-md md:text-1xl lg:text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">Financial User Inputs</h1>
+          <div className="grid grid-rows lg:grid-flow-col">
             <div>
               <div className="h-56 grid gap-4 place-content-center ">
                 <div className="card bg-[#54c45e] text-gray-900">
@@ -251,7 +263,7 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
                 </div>
               </div>
             </div>
-            <div className="row-span-3 col-span-2">
+            <div className="row-span-3 lg:col-span-2">
               <div className="space-y-12">
                 <div className="px-12 py-4">
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -273,7 +285,7 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
                     <div className='w-96 content-center' key={option.id}>
                       <button
                         onClick={() => handleSubmit(option.key)}
-                        className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
+                        className="rounded-full bg-[#dc5a57] hover:bg-[#ffa81f] px-10 py-3 text-sm font-semibold text-white shadow-sm"
                       >
                         {option.description}
                       </button>

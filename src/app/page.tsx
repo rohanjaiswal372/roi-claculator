@@ -199,18 +199,16 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-between p-12">
-      <div className='w-10/12'>
-        <div className="bg-[#F2F2F2] flex flex-row rounded p-8 m-1 mx-auto justify-center">
-          <Breadcrumbs activeCard={activeCard} setActiveState={setActiveState} />
-        </div>
-        <div className="bg-[#F2F2F2] rounded p-8">
-          {activeCard.PatientSurgeryVolume && <PatientSurgeryCard cardData={cardData} onSubmitPatientSurgeryVolume={onSubmitPatientSurgeryVolume} />}
-          {activeCard.FinancialUserInputs && <FinancialUserCard marcs={MARCS} cardData={cardData} onSubmitFinancialUserInputs={onSubmitFinancialUserInputs} />}
-          {activeCard.OptionsROIcalculations && <OptionsROICard roiOptions={ROI_CALCULATION_INPUTS} onSubmitROIOption={onSubmitROIOption} />}
-          {activeCard.WhatIf && <WhatIfCard whatIfOptions={WHATIF_INPUTS} cardData={cardData} onSubmitWhatIfCard={onSubmitWhatIfCard} />}
-          {activeCard.OutputROI && <OutputROICard cardData={cardData} redoROI={redoROI} />}
-        </div>
+    <main className="py-12" >
+      <div className="bg-[#F2F2F2] flex flex-row rounded p-8 m-1 mx-auto justify-center">
+        <Breadcrumbs activeCard={activeCard} setActiveState={setActiveState} />
+      </div>
+      <div className="bg-[#F2F2F2] rounded p-8">
+        {activeCard.PatientSurgeryVolume && <PatientSurgeryCard cardData={cardData} onSubmitPatientSurgeryVolume={onSubmitPatientSurgeryVolume} />}
+        {activeCard.FinancialUserInputs && <FinancialUserCard marcs={MARCS} cardData={cardData} onSubmitFinancialUserInputs={onSubmitFinancialUserInputs} />}
+        {activeCard.OptionsROIcalculations && <OptionsROICard roiOptions={ROI_CALCULATION_INPUTS} onSubmitROIOption={onSubmitROIOption} />}
+        {activeCard.WhatIf && <WhatIfCard whatIfOptions={WHATIF_INPUTS} cardData={cardData} onSubmitWhatIfCard={onSubmitWhatIfCard} />}
+        {activeCard.OutputROI && <OutputROICard cardData={cardData} redoROI={redoROI} />}
       </div>
     </main>
   );

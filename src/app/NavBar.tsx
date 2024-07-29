@@ -10,17 +10,17 @@ function navbar() {
   ]
   return (
     <nav className='flex border-b'>
-      <div className='flex flex-row w-3/4 space-x-14 m-auto my-3 h-14 items-center'>
-        <Link href='/' className='basis-1/3 flex space-x-2 items-center'>
+      <div className='flex flex-row xs:w-full md:w-3/4 space-x-14 m-auto my-3 h-14 items-center'>
+        <Link href='/' className='hidden md:block basis-1/3 flex space-x-2 items-center'>
           <Image
             src="/bariatricLogo.png"
             width={190}
             height={45}
             alt="Screenshots of the dashboard project showing desktop version"
-            className="hidden md:block object-contain"
+            className="object-contain"
           />
         </Link>
-        <ul className='basis-1/2 flex space-x-6'>
+        <ul className='md:basis-1/2 flex '>
           {links.map((link, idx) =>
             <li key={idx}>
               <Link className='text-zinc-500 hover:text-zinc-800 transition-colors' href={link.href}>{link.label}</Link></li>

@@ -1,6 +1,3 @@
-'use client'
-import React, { useRef } from 'react'
-import { useReactToPrint } from 'react-to-print';
 
 type OutputROICardProps = {
   redoROI: () => void;
@@ -8,16 +5,13 @@ type OutputROICardProps = {
 };
 
 const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
-  const printComponentRef = useRef(null);
-
-  const handlePrint = useReactToPrint({
-    content: () => printComponentRef.current,
-  });
-
+  const handlePrint = () => {
+    window.print();
+  }
   return (
-    <div ref={printComponentRef} className='min-w-full'>
-      <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">ROI Output</h1>
-      <div className="grid grid-rows-2 grid-cols-3 mx-10">
+    <div className='min-w-full'>
+      <h1 className="lg:text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">ROI Output</h1>
+      <div className="grid lg:grid-rows-2 lg:grid-cols-3 lg:mx-10">
         <div>
           <div className="grid place-content-center pt-10">
             <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4] text-gray-900">
@@ -73,7 +67,7 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
                 <button
                   type="submit"
                   onClick={redoROI}
-                  className="tracking-wide rounded-full bg-[#dc5a57] w-72 py-8 text-sm font-semibold text-white shadow-sm"
+                  className="tracking-wide rounded-full bg-[#dc5a57] hover:bg-[#ffa81f] w-72 py-8 text-sm font-semibold text-white shadow-sm"
                 >
                   Redo Calculations
                 </button>
@@ -84,7 +78,7 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
                 <button
                   type="button"
                   onClick={handlePrint}
-                  className="tracking-wide rounded-full bg-[#dc5a57] min-w-72 py-8 text-sm font-semibold text-white shadow-sm"
+                  className="tracking-wide rounded-full bg-[#dc5a57] hover:bg-[#ffa81f] min-w-72 py-8 text-sm font-semibold text-white shadow-sm"
                 >
                   Print
                 </button>

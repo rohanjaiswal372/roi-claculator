@@ -8,9 +8,9 @@ type OptionsROIcalculations = {
 const optionsROICard = ({ onSubmitROIOption, roiOptions }: OptionsROIcalculations) => {
   return (
     <div >
-      <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">How Do you Want to Perform the ROI calculations ? </h1>
-      <form className="grid grid-cols-2">
-        <div className='grid grid-rows-3'>
+      <h1 className="lg:text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">How Do you Want to Perform the ROI calculations ? </h1>
+      <form className="grid lg:grid-cols-2">
+        <div className='grid lg:grid-rows-3'>
           <div className="row-start-2 px-12 py-5 place-content-center">
             <div className="card bg-[#FEF1F0] border-2 border-[#f1e5e4]  text-black">
               <div className="card-body items-center">
@@ -19,7 +19,7 @@ const optionsROICard = ({ onSubmitROIOption, roiOptions }: OptionsROIcalculation
             </div>
           </div>
         </div>
-        <div className='py-10'>
+        <div className='lg:py-10'>
           <div className="grid gap-8 place-content-center">
             {roiOptions ? roiOptions.options.map((option: any) => (
               <div className='content-center' key={option.id}>

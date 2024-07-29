@@ -34,7 +34,7 @@ const PatientSurgeryCard = ({ onSubmitPatientSurgeryVolume, cardData }: PatientS
       <form className="grid grid-rows grid-flow-col gap-4" onSubmit={handleSubmit}>
         <div className="row-span-3 col-span-2">
           <div className="space-y-12">
-            <div className="border-r border-gray-900/10 pr-12">
+            <div className="pr-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 {PATIENT_SURGERY_INPUTS.map(el => (
                   <div className="col-span-full" key={el.id}>
@@ -63,7 +63,7 @@ const PatientSurgeryCard = ({ onSubmitPatientSurgeryVolume, cardData }: PatientS
             <div>
               <button
                 type="submit"
-                className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
+                className="rounded-full bg-[#dc5a57] hover:bg-[#ffa81f] px-10 py-3 text-sm font-semibold text-white shadow-sm"
               >
                 Submit
               </button>

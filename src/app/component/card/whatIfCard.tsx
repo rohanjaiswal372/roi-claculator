@@ -55,7 +55,7 @@ const whatIfCard = ({ onSubmitWhatIfCard, whatIfOptions, cardData }: WhatIfCardP
                   <div className=''>
                     <button
                       type="submit"
-                      className="rounded-full bg-[#dc5a57] px-10 py-3 text-sm font-semibold text-white shadow-sm"
+                      className="rounded-full bg-[#dc5a57] hover:bg-[#ffa81f] px-10 py-3 text-sm font-semibold text-white shadow-sm"
                     >
                       Submit
                     </button>

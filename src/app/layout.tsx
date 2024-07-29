@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { useReactToPrint } from 'react-to-print';
 import "./globals.css";
 import NavBar from "@/app/NavBar";
 import Footer from "./footer";
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,14 +22,16 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
       </head>
-      <body className="min-h-screen">
+      <body className="min-h-screen printable">
         <div className="relative">
           <div className="fixed top-0 left-0 right-0 bg-[#f2f2f2]">
             <NavBar></NavBar>
           </div>
         </div>
-        <div className="py-20 bg-[#27413e]">
-          {children}
+        <div className="flex flex-col items-center justify-between md:p-20 bg-[#27413e]">
+          <div className="w-10/12 xs:w-full sm:w-full xl:w-9/12">
+            {children}
+          </div>
         </div>
         <div>
           <Footer />
