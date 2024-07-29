@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "@/app/NavBar";
+import Footer from "./footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,9 +20,18 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
       </head>
-      <body>
-        <NavBar></NavBar>
-        {children}
+      <body className="min-h-screen">
+        <div className="relative">
+          <div className="fixed top-0 left-0 right-0 bg-[#f2f2f2]">
+            <NavBar></NavBar>
+          </div>
+        </div>
+        <div className="py-20 bg-[#27413e]">
+          {children}
+        </div>
+        <div>
+          <Footer />
+        </div>
       </body>
     </html>
   );

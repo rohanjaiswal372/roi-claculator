@@ -199,7 +199,7 @@ export default function Home() {
   }
 
   return (
-    <main className="bg-[#27413e] flex flex-col min-h-screen items-center justify-between p-12">
+    <main className="flex flex-col items-center justify-between p-12">
       <div className='w-10/12'>
         <div className="bg-[#F2F2F2] flex flex-row rounded p-8 m-1 mx-auto justify-center">
           <Breadcrumbs activeCard={activeCard} setActiveState={setActiveState} />

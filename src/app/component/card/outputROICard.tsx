@@ -15,7 +15,7 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
   });
 
   return (
-    <div ref={printComponentRef}>
+    <div ref={printComponentRef} className='min-w-full'>
       <h1 className="text-3xl tracking-wider pb-10 pt-5 text-center text-gray-900 shadow-sm">ROI Output</h1>
       <div className="grid grid-rows-2 grid-cols-3 mx-10">
         <div>
@@ -68,7 +68,7 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
 
         <div className='col-span-2 mt-10'>
           <form className="grid grid-rows-1 grid-cols-2">
-            <div className="grid place-content-center py-10">
+            <div className="grid place-content-center py-2">
               <div>
                 <button
                   type="submit"
@@ -79,7 +79,7 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
                 </button>
               </div>
             </div>
-            <div className="grid place-content-center py-10">
+            <div className="grid place-content-center py-2">
               <div>
                 <button
                   type="button"
