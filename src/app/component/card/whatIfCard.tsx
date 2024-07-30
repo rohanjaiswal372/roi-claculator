@@ -39,7 +39,7 @@ const whatIfCard = ({ onSubmitWhatIfCard, whatIfOptions, cardData }: WhatIfCardP
                     <div className="mt-2">
                       <input
                       required
-                        type="text"
+                        type="number"
                         name={el.key}
                         id={el.key}
                         placeholder={cardData.whatIfCardData?.[el.key] ?? el.key}
