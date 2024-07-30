@@ -236,21 +236,21 @@ export const WHATIF_INPUTS = [
         setA: [
           {
             key: "VBL",
-            value: input.IPTR * estimate * reimbursement,
+            value: (input.IPTR/100) * estimate * reimbursement,
           },
           {
             key: "VBL#x12",
-            value: input.IPTR * estimate * reimbursement * 12,
+            value: (input.IPTR/100) * estimate * reimbursement * 12,
           },
         ],
         setB: [
           {
             key: "ROI",
-            value: input.IPTR * estimate * reimbursement,
+            value: (input.IPTR/100) * estimate * reimbursement,
           },
           {
             key: "ROI#x12",
-            value: input.IPTR * estimate * reimbursement * 12,
+            value: (input.IPTR/100) * estimate * reimbursement * 12,
           },
         ],
         setC: [
@@ -371,13 +371,13 @@ export const WHATIF_INPUTS = [
             key: "VBLBN#%",
             value:
               input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
-              input.IPTR * estimate * reimbursement,
+              (input.IPTR/100) * estimate * reimbursement,
           },
           {
             key: "VBLBN#%x12",
             value:
               (input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
-                input.IPTR * estimate * reimbursement) *
+                (input.IPTR/100) * estimate * reimbursement) *
               12,
           },
         ],
@@ -386,13 +386,13 @@ export const WHATIF_INPUTS = [
             key: "ROIblbn#%",
             value:
               input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
-              input.IPTR * estimate * reimbursement,
+              (input.IPTR/100) * estimate * reimbursement,
           },
           {
             key: "ROIblbn#%x12",
             value:
               (input.INP * reimbursement * cardData.patientSurgeryData.CPTR +
-                input.IPTR * estimate * reimbursement) *
+                (input.IPTR/100) * estimate * reimbursement) *
               12,
           },
         ],
