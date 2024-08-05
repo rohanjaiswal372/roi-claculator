@@ -27,7 +27,7 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
             {cardData.ROIData.setA.map((el: any, idx: any) =>
               <div className="card bg-[#54c45e] text-gray-900" key={idx}>
                 <div className="card-body items-center text-center px-10 py-6">
-                  <p>{el.key}: {el.value}</p>
+                  <p>{el.key}: {el.value.toFixed(2)}</p>
                 </div>
               </div>
             )}
@@ -39,7 +39,7 @@ const OutputROICard = ({ cardData, redoROI }: OutputROICardProps) => {
             {cardData.ROIData.setB.map((el: any, idx: any) =>
               <div className="card bg-[#54c45e] text-gray-900" key={idx}>
                 <div className="card-body items-center text-center px-10 py-6">
-                  <p>{el.key}: {el.value} </p>
+                  <p>{el.key}: {el.value.toFixed(2)} </p>
                 </div>
               </div>
             )}
