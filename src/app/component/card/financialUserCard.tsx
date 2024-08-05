@@ -63,7 +63,7 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
     const MCIARCS = MRProcedures * 0.8 * formValues.MCI
 
     //the final Arcs calculation will then take into consideration the payor mix
-    const ARCS = (CARCS * formValues.C) + (MARCSA * formValues.MC) + (MCIARCS * formValues.MCI) / 3
+    const ARCS = (CARCS * formValues.C) + (MARCSA * formValues.MC) + (MCIARCS * formValues.MCI)
 
     //calculate the actural practice reimbursement (APR)  
     const APR = cardData.patientSurgeryData.EMS * ARCS;
