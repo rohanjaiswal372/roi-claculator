@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FINANCIAL_USER_INPUTS, AVERAGE_REIMBURSEMENT } from '@/app/resource'
 
 type FinancialUserInputsProps = {
-  onSubmitFinancialUserInputs: (APR: number) => void;
+  onSubmitFinancialUserInputs: (APR: number, ARCS?: number) => void;
   cardData: any;
   marcs: number
 };
@@ -37,14 +37,14 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
     const formData = new FormData(form);
 
     const formValues: FormValues = {
-      MC: parseFloat(formData.get('MC') as string),
-      MCI: parseFloat(formData.get('MCI') as string),
-      C: parseFloat(formData.get('C') as string),
-      CRMC: parseFloat(formData.get('CRMC') as string),
-      GBP: parseFloat(formData.get('GBP') as string),
-      VSG: parseFloat(formData.get('VSG') as string),
-      DS: parseFloat(formData.get('DS') as string),
-      AGB: parseFloat(formData.get('AGB') as string),
+      MC: parseFloat(formData.get('MC') as string) / 100,
+      MCI: parseFloat(formData.get('MCI') as string) / 100,
+      C: parseFloat(formData.get('C') as string) / 100,
+      CRMC: parseFloat(formData.get('CRMC') as string) / 100,
+      GBP: parseFloat(formData.get('GBP') as string) / 100,
+      VSG: parseFloat(formData.get('VSG') as string) / 100,
+      DS: parseFloat(formData.get('DS') as string) / 100,
+      AGB: parseFloat(formData.get('AGB') as string) / 100,
     };
     setFormData(formValues);
 
@@ -54,7 +54,7 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
       (AVERAGE_REIMBURSEMENT.MrVSG * formValues.VSG) +
       (AVERAGE_REIMBURSEMENT.MrAGB * formValues.AGB) +
       (AVERAGE_REIMBURSEMENT.MrDS * formValues.DS) + AVERAGE_REIMBURSEMENT.MrEGD + AVERAGE_REIMBURSEMENT.MrConsult
-
+      
     //1. Commerical average reimbursement for a completed surgery (Carcs):    Carcs = Mr%ofprocedures x CR%MC
     const CARCS = MRProcedures * formValues.CRMC
     //2. Medicare average reimbursement for a completed surgery adjusted (Marcsa)   Marcsa =  Mr%ofprocedures x MC%
@@ -67,7 +67,7 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
 
     //calculate the actural practice reimbursement (APR)  
     const APR = cardData.patientSurgeryData.EMS * ARCS;
-    onSubmitFinancialUserInputs(APR)
+    onSubmitFinancialUserInputs(APR, ARCS)
   };
 
   return (
