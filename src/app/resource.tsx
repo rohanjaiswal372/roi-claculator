@@ -2,7 +2,7 @@
 export const AVERAGE_REIMBURSEMENT = {
   MrGBP: 1733.95,
   MrVSG: 1099.49,
-  MrDS: 1955.31,
+  MrDS: 1995.31, 
   MrAGB: 1127.78,
   MrConsult: 220.36,
   MrEGD: 136.48,
@@ -229,7 +229,7 @@ export const WHATIF_INPUTS = [
     calculate: (input: any, cardData: any, reimbursement: any) => {
       // Estimated number of monthly Completed Surgeries or 
       // Estimated number of monthly New Patient Consults
-      const estimate = cardData.financialData.customData ? cardData.patientSurgeryData.EMP : cardData.patientSurgeryData.EMS
+      const estimate = cardData.financialData.customData ? cardData.patientSurgeryData.ENP : cardData.patientSurgeryData.EMS
       return {
         description:
           "Based your Input of a projected  increase your business operations by improiving yoru consult to surgery putllthrough rate here is your results using financial calculations based on medicare reimbursement averages:",
@@ -362,7 +362,7 @@ export const WHATIF_INPUTS = [
     calculate: (input: any, cardData: any, reimbursement: any) => {
       // Estimated number of monthly Completed Surgeries or 
       // Estimated number of monthly New Patient Consults
-      const estimate = cardData.financialData.customData ? cardData.patientSurgeryData.EMP : cardData.patientSurgeryData.EMS
+      const estimate = cardData.financialData.customData ? cardData.patientSurgeryData.ENP : cardData.patientSurgeryData.EMS
       return {
         description:
           "Based your Input of a projected  increase in number of new consults seen and projected  increase your business operations by improving your consult to surgery pull-through rate here is your results using financial calculations based on medicare reimbursement averages:",

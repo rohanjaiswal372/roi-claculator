@@ -50,23 +50,23 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
 
     //calculate the avg medicare reimbursement based on procedure mix (Mr%ofprocedures):
     //[(MrGBPx%gbp)+ (MrVSSGx%vsg)+(MrAGBx%AGB)+ (MrDSx%DS)]+ MrEGD + MrConsult = Mr%ofprocedures
-    const MRProcedures = (AVERAGE_REIMBURSEMENT.MrGBP * formValues.GBP) +
+    const MRProcedures = (
+      (AVERAGE_REIMBURSEMENT.MrGBP * formValues.GBP) +
       (AVERAGE_REIMBURSEMENT.MrVSG * formValues.VSG) +
       (AVERAGE_REIMBURSEMENT.MrAGB * formValues.AGB) +
-      (AVERAGE_REIMBURSEMENT.MrDS * formValues.DS) + AVERAGE_REIMBURSEMENT.MrEGD + AVERAGE_REIMBURSEMENT.MrConsult
-      
+      (AVERAGE_REIMBURSEMENT.MrDS * formValues.DS))
+      + AVERAGE_REIMBURSEMENT.MrEGD + AVERAGE_REIMBURSEMENT.MrConsult
     //1. Commerical average reimbursement for a completed surgery (Carcs):    Carcs = Mr%ofprocedures x CR%MC
     const CARCS = MRProcedures * formValues.CRMC
     //2. Medicare average reimbursement for a completed surgery adjusted (Marcsa)   Marcsa =  Mr%ofprocedures x MC%
     const MARCSA = MRProcedures * formValues.MC
     //3. Medicaid average Reimbursement for a completed surgery:  (MCIarcs)   MCIarcs = (Mr%ofprocedures x .8) x MCI%
     const MCIARCS = MRProcedures * 0.8 * formValues.MCI
-
     //the final Arcs calculation will then take into consideration the payor mix
     const ARCS = (CARCS * formValues.C) + (MARCSA * formValues.MC) + (MCIARCS * formValues.MCI)
-
     //calculate the actural practice reimbursement (APR)  
     const APR = cardData.patientSurgeryData.EMS * ARCS;
+
     onSubmitFinancialUserInputs(APR, ARCS)
   };
 
