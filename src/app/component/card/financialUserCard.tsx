@@ -56,16 +56,26 @@ const financialUserCard = ({ onSubmitFinancialUserInputs, cardData, marcs }: Fin
       (AVERAGE_REIMBURSEMENT.MrAGB * formValues.AGB) +
       (AVERAGE_REIMBURSEMENT.MrDS * formValues.DS))
       + AVERAGE_REIMBURSEMENT.MrEGD + AVERAGE_REIMBURSEMENT.MrConsult
+    console.log('MRProcedures', MRProcedures)
     //1. Commerical average reimbursement for a completed surgery (Carcs):    Carcs = Mr%ofprocedures x CR%MC
     const CARCS = MRProcedures * formValues.CRMC
+    console.log('CARCS', CARCS)
+
     //2. Medicare average reimbursement for a completed surgery adjusted (Marcsa)   Marcsa =  Mr%ofprocedures x MC%
     const MARCSA = MRProcedures * formValues.MC
+    console.log('MARCSA', MARCSA)
+
     //3. Medicaid average Reimbursement for a completed surgery:  (MCIarcs)   MCIarcs = (Mr%ofprocedures x .8) x MCI%
     const MCIARCS = MRProcedures * 0.8 * formValues.MCI
+    console.log('MCIARCS', MCIARCS)
+
     //the final Arcs calculation will then take into consideration the payor mix
     const ARCS = (CARCS * formValues.C) + (MARCSA * formValues.MC) + (MCIARCS * formValues.MCI)
+    console.log('ARCS', ARCS)
+
     //calculate the actural practice reimbursement (APR)  
     const APR = cardData.patientSurgeryData.EMS * ARCS;
+    console.log('APR', APR)
 
     onSubmitFinancialUserInputs(APR, ARCS)
   };
