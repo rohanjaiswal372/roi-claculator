@@ -179,6 +179,8 @@ export default function Home() {
   };
 
   const onSubmitWhatIfCard = (res: any, selectedOption: any) => {
+    console.log('MARCS');
+    console.log(MARCS);
 
     // Medicare average or custom financial data for reimbursement for a completed surgery
     const reimbursement = cardData.financialData.customData ? cardData.financialData.ARCS : MARCS;
